@@ -1,28 +1,36 @@
-[gd_scene load_steps=20 format=3 uid="uid://dmg68j8m5x5ye"]
+[gd_scene load_steps=24 format=3 uid="uid://dmg68j8m5x5ye"]
 
 [ext_resource type="FontFile" uid="uid://csg1fdcb5srml" path="res://fonts/monogram-extended.ttf" id="1_ufbd6"]
 [ext_resource type="Material" uid="uid://p5htxu1bwg6u" path="res://resources/gameboy_shadermat.tres" id="1_wbfoc"]
+[ext_resource type="Script" path="res://scripts/menus_and_levels/maingame.gd" id="2_f0ex1"]
 [ext_resource type="Texture2D" uid="uid://dqbmvcc3yinjh" path="res://assets/references/download (3).png" id="2_sfkjw"]
-[ext_resource type="Texture2D" uid="uid://1kujtqygu352" path="res://assets/gamesprites/backgrounds/references/6.png" id="3_3co3s"]
 [ext_resource type="Texture2D" uid="uid://cq0t6q5t1apoy" path="res://assets/gamesprites/backgrounds/sea.png" id="5_i1car"]
-[ext_resource type="Texture2D" uid="uid://dt41rkn4x4g0m" path="res://assets/gamesprites/backgrounds/clouds.png" id="6_lh1jp"]
+[ext_resource type="Texture2D" uid="uid://cee352accro4x" path="res://assets/gamesprites/backgrounds/clouds2.png" id="6_45fj1"]
 [ext_resource type="Texture2D" uid="uid://l8yojopkmd5v" path="res://assets/gamesprites/backgrounds/deck.png" id="7_excwg"]
-[ext_resource type="Texture2D" uid="uid://bo8aunokxyek7" path="res://assets/gamesprites/player/shadow.png" id="8_knos6"]
+[ext_resource type="Texture2D" uid="uid://iii7ppol60jd" path="res://assets/gamesprites/backgrounds/deck2d.png" id="8_7y02l"]
+[ext_resource type="Texture2D" uid="uid://bo8aunokxyek7" path="res://assets/gamesprites/shadow.png" id="8_knos6"]
 [ext_resource type="Script" path="res://scripts/player_shadow.gd" id="9_oe4ho"]
 [ext_resource type="PackedScene" uid="uid://ddmehvvff8lxn" path="res://scenes/characters/poppy.tscn" id="11_u8dcy"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="11_y7msq"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="12_5nu0o"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="13_fl05v"]
-[ext_resource type="PackedScene" uid="uid://dxj5yt1cob3oi" path="res://scenes/characters/skellobone.tscn" id="19_ba7dj"]
+[ext_resource type="Texture2D" uid="uid://dmh5tg0fnq0ij" path="res://assets/gamesprites/backgrounds/deck2-foreground.png" id="13_oeyh4"]
+[ext_resource type="PackedScene" uid="uid://dxj5yt1cob3oi" path="res://scenes/characters/skellobone_staff.tscn" id="19_ba7dj"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_0040m"]
 font = ExtResource("1_ufbd6")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_11kp1"]
-size = Vector2(320, 4)
+size = Vector2(373, 7)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_htdet"]
+size = Vector2(80, 6)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0awgt"]
-size = Vector2(25, 106)
+size = Vector2(6, 106)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kfbxd"]
+size = Vector2(19.5, 32.1875)
 
 [sub_resource type="Resource" id="Resource_co2ol"]
 script = ExtResource("13_fl05v")
@@ -31,11 +39,13 @@ transition = 0
 ease = 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nb1xq"]
-size = Vector2(320, 144)
+size = Vector2(499, 144)
 
 [node name="MainPixel" type="Node2D"]
 texture_filter = 1
 material = ExtResource("1_wbfoc")
+script = ExtResource("2_f0ex1")
+auto_full_screen = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -145,6 +155,7 @@ offset_bottom = 45.0
 border_color = Color(0.50934, 0.454874, 0.917264, 1)
 
 [node name="ReferenceRect" type="ReferenceRect" parent="CanvasLayer/UI"]
+visible = false
 custom_minimum_size = Vector2(320, 144)
 layout_mode = 0
 offset_right = 40.0
@@ -167,16 +178,12 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_sfkjw")
 centered = false
 
-[node name="BGRef" type="Sprite2D" parent="Sprites"]
-visible = false
-scale = Vector2(0.138889, 0.138889)
-texture = ExtResource("3_3co3s")
-centered = false
-
 [node name="Backgrounds" type="Node2D" parent="Sprites"]
 
 [node name="Sea" type="Parallax2D" parent="Sprites/Backgrounds"]
 scroll_scale = Vector2(0.1, 0.1)
+scroll_offset = Vector2(-58, 0)
+repeat_size = Vector2(400, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Sprites/Backgrounds/Sea"]
 texture = ExtResource("5_i1car")
@@ -184,66 +191,119 @@ centered = false
 
 [node name="Clouds" type="Parallax2D" parent="Sprites/Backgrounds"]
 scroll_scale = Vector2(0.3, 0.3)
+scroll_offset = Vector2(-58, 0)
+repeat_size = Vector2(500, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Sprites/Backgrounds/Clouds"]
-texture = ExtResource("6_lh1jp")
+texture = ExtResource("6_45fj1")
 centered = false
 
-[node name="ShipDeck" type="Sprite2D" parent="Sprites/Backgrounds"]
+[node name="Deck_old" type="Node2D" parent="Sprites/Backgrounds"]
+visible = false
+
+[node name="ShipDeck" type="Sprite2D" parent="Sprites/Backgrounds/Deck_old"]
 texture = ExtResource("7_excwg")
 centered = false
 
-[node name="ShipDeck2" type="Sprite2D" parent="Sprites/Backgrounds"]
+[node name="ShipDeck2" type="Sprite2D" parent="Sprites/Backgrounds/Deck_old"]
 position = Vector2(-160, 0)
 texture = ExtResource("7_excwg")
 centered = false
 
-[node name="ShipDeck3" type="Sprite2D" parent="Sprites/Backgrounds"]
+[node name="ShipDeck3" type="Sprite2D" parent="Sprites/Backgrounds/Deck_old"]
 position = Vector2(160, 0)
 texture = ExtResource("7_excwg")
 centered = false
 
+[node name="ShipDeck" type="Sprite2D" parent="Sprites/Backgrounds"]
+position = Vector2(-57, 0)
+texture = ExtResource("8_7y02l")
+centered = false
+
+[node name="DeckForeground" type="Sprite2D" parent="Sprites/Backgrounds"]
+z_index = 1
+position = Vector2(-57, 0)
+texture = ExtResource("13_oeyh4")
+centered = false
+
 [node name="Shadow" type="Sprite2D" parent="Sprites" node_paths=PackedStringArray("player")]
-position = Vector2(60, 93)
+position = Vector2(123, 93)
 texture = ExtResource("8_knos6")
 script = ExtResource("9_oe4ho")
 player = NodePath("../Poppy")
 
 [node name="Poppy" parent="Sprites" instance=ExtResource("11_u8dcy")]
-position = Vector2(60, 70)
+position = Vector2(123, 70)
 
 [node name="Skellobone" parent="Sprites" instance=ExtResource("19_ba7dj")]
-position = Vector2(26, 70)
+position = Vector2(-2, 22)
 
-[node name="Ground" type="StaticBody2D" parent="Sprites"]
+[node name="Grounds" type="Node2D" parent="Sprites"]
+
+[node name="Ground" type="StaticBody2D" parent="Sprites/Grounds"]
 position = Vector2(0, 94)
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Ground"]
-position = Vector2(160, 2)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Grounds/Ground"]
+position = Vector2(186.5, 3.5)
 shape = SubResource("RectangleShape2D_11kp1")
 
-[node name="Wall" type="StaticBody2D" parent="Sprites"]
+[node name="Ground2" type="StaticBody2D" parent="Sprites/Grounds"]
+position = Vector2(0, 94)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Grounds/Ground2"]
+position = Vector2(-17, -44)
+shape = SubResource("RectangleShape2D_htdet")
+
+[node name="Ground3" type="StaticBody2D" parent="Sprites/Grounds"]
+position = Vector2(0, 94)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Grounds/Ground3"]
+position = Vector2(412, -13)
+shape = SubResource("RectangleShape2D_htdet")
+
+[node name="PoppyWall" type="StaticBody2D" parent="Sprites"]
 position = Vector2(0, 106)
 collision_layer = 8
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Wall"]
-position = Vector2(12.5, -53)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/PoppyWall"]
+position = Vector2(38, -53)
 shape = SubResource("RectangleShape2D_0awgt")
+debug_color = Color(0.372224, 0.610655, 0.212997, 0.42)
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Sprites/Wall"]
-position = Vector2(307, -53)
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Sprites/PoppyWall"]
+position = Vector2(374, -53)
 shape = SubResource("RectangleShape2D_0awgt")
+debug_color = Color(0.372549, 0.611765, 0.211765, 0.419608)
+
+[node name="Wall2" type="StaticBody2D" parent="Sprites"]
+position = Vector2(0, 106)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Wall2"]
+position = Vector2(13, -31.8125)
+shape = SubResource("RectangleShape2D_kfbxd")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Sprites/Wall2"]
+position = Vector2(382, -11)
+shape = SubResource("RectangleShape2D_kfbxd")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
-position = Vector2(80, 72)
+position = Vector2(123, 72)
 process_callback = 0
-limit_left = 0
+limit_left = -56
 limit_top = 0
-limit_right = 320
+limit_right = 443
 limit_bottom = 144
 
 [node name="PhantomCameraHost" type="Node" parent="Camera2D"]
@@ -252,7 +312,7 @@ process_physics_priority = 300
 script = ExtResource("11_y7msq")
 
 [node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
-position = Vector2(80, 72)
+position = Vector2(123, 72)
 script = ExtResource("12_5nu0o")
 follow_mode = 5
 follow_target = NodePath("../Sprites/Poppy")
@@ -264,6 +324,5 @@ limit_target = NodePath("../PhantomCameraLimit")
 
 [node name="PhantomCameraLimit" type="CollisionShape2D" parent="."]
 visible = false
-position = Vector2(160, 72)
+position = Vector2(193.5, 72)
 shape = SubResource("RectangleShape2D_nb1xq")
-metadata/_edit_lock_ = true

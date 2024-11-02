@@ -44,9 +44,8 @@ func sync_change_flip(flip : bool):
 	$SwordHitbox.scale.x = -1.0 if flip else 1.0
 
 func handle_jump_anim(velo_y : float):
-	#if velo_y < 0.0: if !sprite.get_animation() == "jump": sprite.play("jump")
-	#if velo_y > 0.0: if !sprite.get_animation() == "fall": sprite.play("fall")
-	pass
+	if velo_y < 0.0: sync_change_anim("jump")
+	if velo_y > 0.0: sync_change_anim("fall")
 	
 func handle_run_anim(plus_right : float, velo_y : float):
 	if plus_right > 0:
@@ -123,5 +122,6 @@ func _on_fullbody_anim_framechange():
 
 func _on_sword_hitbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemies"):
-		print("hit!")
-		body.take_damage(!full_body_anim.flip_h)
+		if !body.is_flashing:
+			print("hit!")
+			body.take_damage(!full_body_anim.flip_h)

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Parabolic" load_steps=2 format=3 uid="uid://du4oq62d80nov"]
+
+[ext_resource type="Script" path="res://scripts/resources/parabolic.gd" id="1_01l2u"]
+
+[resource]
+script = ExtResource("1_01l2u")
+initial_velocity = 200.0
+angle_degrees = 40.0
+gravity = 10.0
