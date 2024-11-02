@@ -1,259 +1,269 @@
-[gd_scene load_steps=33 format=3 uid="uid://dmg68j8m5x5ye"]
+[gd_scene load_steps=20 format=3 uid="uid://dmg68j8m5x5ye"]
 
-[ext_resource type="Texture2D" uid="uid://b77rusuov1756" path="res://assets/gamesprites/temp/JujitsukaHero-Idle.png" id="1_2d8bj"]
-[ext_resource type="Script" path="res://scripts/proto_player.gd" id="2_ai015"]
-[ext_resource type="Texture2D" uid="uid://buxqdvyagvhpc" path="res://assets/gamesprites/player/placeholder player attack.png" id="2_r3ig3"]
-[ext_resource type="Texture2D" uid="uid://y1jyhj3fuj8d" path="res://assets/gamesprites/player/placeholder player idle2.png" id="3_pf8as"]
-[ext_resource type="Texture2D" uid="uid://ba3o87uvqjq5r" path="res://assets/gamesprites/player/placeholder player fall.png" id="4_6v0kr"]
-[ext_resource type="Texture2D" uid="uid://3d8fpvycaide" path="res://assets/gamesprites/player/placeholder player run.png" id="4_krp7k"]
-[ext_resource type="Texture2D" uid="uid://f7nc5xrgf1il" path="res://assets/gamesprites/player/placeholder player jump edited.png" id="6_w1j3y"]
+[ext_resource type="FontFile" uid="uid://csg1fdcb5srml" path="res://fonts/monogram-extended.ttf" id="1_ufbd6"]
+[ext_resource type="Material" uid="uid://p5htxu1bwg6u" path="res://resources/gameboy_shadermat.tres" id="1_wbfoc"]
+[ext_resource type="Texture2D" uid="uid://dqbmvcc3yinjh" path="res://assets/references/download (3).png" id="2_sfkjw"]
+[ext_resource type="Texture2D" uid="uid://1kujtqygu352" path="res://assets/gamesprites/backgrounds/references/6.png" id="3_3co3s"]
+[ext_resource type="Texture2D" uid="uid://cq0t6q5t1apoy" path="res://assets/gamesprites/backgrounds/sea.png" id="5_i1car"]
+[ext_resource type="Texture2D" uid="uid://dt41rkn4x4g0m" path="res://assets/gamesprites/backgrounds/clouds.png" id="6_lh1jp"]
+[ext_resource type="Texture2D" uid="uid://l8yojopkmd5v" path="res://assets/gamesprites/backgrounds/deck.png" id="7_excwg"]
+[ext_resource type="Texture2D" uid="uid://bo8aunokxyek7" path="res://assets/gamesprites/player/shadow.png" id="8_knos6"]
+[ext_resource type="Script" path="res://scripts/player_shadow.gd" id="9_oe4ho"]
+[ext_resource type="PackedScene" uid="uid://ddmehvvff8lxn" path="res://scenes/characters/poppy.tscn" id="11_u8dcy"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="11_y7msq"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="12_5nu0o"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="13_fl05v"]
+[ext_resource type="PackedScene" uid="uid://dxj5yt1cob3oi" path="res://scenes/characters/skellobone.tscn" id="19_ba7dj"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_e7sx4"]
-atlas = ExtResource("1_2d8bj")
-region = Rect2(0, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qseqr"]
-atlas = ExtResource("1_2d8bj")
-region = Rect2(48, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kocik"]
-atlas = ExtResource("1_2d8bj")
-region = Rect2(96, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1402m"]
-atlas = ExtResource("1_2d8bj")
-region = Rect2(144, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cw0kx"]
-atlas = ExtResource("1_2d8bj")
-region = Rect2(192, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_t3x5m"]
-atlas = ExtResource("1_2d8bj")
-region = Rect2(240, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_41nay"]
-atlas = ExtResource("1_2d8bj")
-region = Rect2(288, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dfu48"]
-atlas = ExtResource("1_2d8bj")
-region = Rect2(336, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gng8w"]
-atlas = ExtResource("1_2d8bj")
-region = Rect2(384, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tcnqj"]
-atlas = ExtResource("1_2d8bj")
-region = Rect2(432, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pui2o"]
-atlas = ExtResource("1_2d8bj")
-region = Rect2(480, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rgrdi"]
-atlas = ExtResource("1_2d8bj")
-region = Rect2(528, 0, 48, 48)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_pqagg"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_e7sx4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qseqr")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kocik")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1402m")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cw0kx")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_t3x5m")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_41nay")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dfu48")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gng8w")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tcnqj")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pui2o")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_rgrdi")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 15.0
-}]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1pu7w"]
-atlas = ExtResource("2_r3ig3")
-region = Rect2(0, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vl5gs"]
-atlas = ExtResource("2_r3ig3")
-region = Rect2(48, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hhw32"]
-atlas = ExtResource("2_r3ig3")
-region = Rect2(96, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_48b3i"]
-atlas = ExtResource("3_pf8as")
-region = Rect2(0, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1g0qc"]
-atlas = ExtResource("3_pf8as")
-region = Rect2(48, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ifanp"]
-atlas = ExtResource("3_pf8as")
-region = Rect2(96, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4tsvd"]
-atlas = ExtResource("3_pf8as")
-region = Rect2(144, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cpc51"]
-atlas = ExtResource("4_krp7k")
-region = Rect2(0, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0agmq"]
-atlas = ExtResource("4_krp7k")
-region = Rect2(48, 0, 48, 48)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_orgmx"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1pu7w")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vl5gs")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hhw32")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hhw32")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hhw32")
-}],
-"loop": false,
-"name": &"attack",
-"speed": 10.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("4_6v0kr")
-}],
-"loop": true,
-"name": &"fall",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_48b3i")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1g0qc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ifanp")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4tsvd")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("6_w1j3y")
-}],
-"loop": true,
-"name": &"jump",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cpc51")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0agmq")
-}],
-"loop": true,
-"name": &"run",
-"speed": 5.0
-}]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_p1jvq"]
-height = 56.0
+[sub_resource type="LabelSettings" id="LabelSettings_0040m"]
+font = ExtResource("1_ufbd6")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_11kp1"]
-size = Vector2(361, 10)
+size = Vector2(320, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0awgt"]
+size = Vector2(25, 106)
+
+[sub_resource type="Resource" id="Resource_co2ol"]
+script = ExtResource("13_fl05v")
+duration = 1.0
+transition = 0
+ease = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nb1xq"]
+size = Vector2(320, 144)
 
 [node name="MainPixel" type="Node2D"]
 texture_filter = 1
+material = ExtResource("1_wbfoc")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GameBoyFilter" type="ColorRect" parent="CanvasLayer"]
 visible = false
-position = Vector2(35, 33)
-sprite_frames = SubResource("SpriteFrames_pqagg")
-animation = &"idle"
-frame_progress = 0.172525
+material = ExtResource("1_wbfoc")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
+[node name="UI" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Reference" type="VBoxContainer" parent="CanvasLayer/UI"]
 visible = false
-position = Vector2(198, 222)
-scale = Vector2(2, 2)
-sprite_frames = SubResource("SpriteFrames_pqagg")
-animation = &"idle"
-frame_progress = 0.172525
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="."]
+[node name="Sky" type="ReferenceRect" parent="CanvasLayer/UI/Reference"]
+custom_minimum_size = Vector2(0, 64.455)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/UI/Reference/Sky"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Sky"
+label_settings = SubResource("LabelSettings_0040m")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sea" type="ReferenceRect" parent="CanvasLayer/UI/Reference"]
+custom_minimum_size = Vector2(0, 57.785)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/UI/Reference/Sea"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 4.0
+offset_top = -21.8925
+offset_right = 44.0
+offset_bottom = 1.1075
+grow_horizontal = 2
+grow_vertical = 2
+text = "Sea"
+label_settings = SubResource("LabelSettings_0040m")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sea2" type="ReferenceRect" parent="CanvasLayer/UI/Reference/Sea"]
+layout_mode = 1
+offset_left = 4.0
+offset_top = 29.0
+offset_right = 156.0
+offset_bottom = 45.0
+border_color = Color(0.446012, 0.595658, 0.062274, 1)
+
+[node name="Label" type="Label" parent="CanvasLayer/UI/Reference/Sea/Sea2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = -16.0
+offset_right = -29.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Ground"
+label_settings = SubResource("LabelSettings_0040m")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sea3" type="ReferenceRect" parent="CanvasLayer/UI/Reference/Sea"]
+layout_mode = 1
+offset_left = 4.0
+offset_top = 38.0
+offset_right = 156.0
+offset_bottom = 45.0
+border_color = Color(0.50934, 0.454874, 0.917264, 1)
+
+[node name="ReferenceRect" type="ReferenceRect" parent="CanvasLayer/UI"]
+custom_minimum_size = Vector2(320, 144)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="UIBlackBorder" type="ColorRect" parent="CanvasLayer/UI"]
+layout_mode = 0
+offset_top = 128.0
+offset_right = 160.0
+offset_bottom = 144.0
+size_flags_vertical = 3
+color = Color(0, 0, 0, 1)
+
+[node name="Sprites" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="Ref" type="Sprite2D" parent="Sprites"]
 visible = false
-position = Vector2(124, 234)
-scale = Vector2(1.5, 1.5)
-sprite_frames = SubResource("SpriteFrames_pqagg")
-animation = &"idle"
-frame_progress = 0.618607
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_sfkjw")
+centered = false
 
-[node name="ProtoPlayer" type="CharacterBody2D" parent="."]
-position = Vector2(171, 190)
-script = ExtResource("2_ai015")
+[node name="BGRef" type="Sprite2D" parent="Sprites"]
+visible = false
+scale = Vector2(0.138889, 0.138889)
+texture = ExtResource("3_3co3s")
+centered = false
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ProtoPlayer"]
-scale = Vector2(2, 2)
-sprite_frames = SubResource("SpriteFrames_orgmx")
-animation = &"attack"
-frame = 4
-frame_progress = 1.0
+[node name="Backgrounds" type="Node2D" parent="Sprites"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ProtoPlayer"]
-position = Vector2(-3, 21)
-shape = SubResource("CapsuleShape2D_p1jvq")
+[node name="Sea" type="Parallax2D" parent="Sprites/Backgrounds"]
+scroll_scale = Vector2(0.1, 0.1)
 
-[node name="Ground" type="StaticBody2D" parent="."]
-position = Vector2(0, 271)
-metadata/_edit_group_ = true
+[node name="Sprite2D" type="Sprite2D" parent="Sprites/Backgrounds/Sea"]
+texture = ExtResource("5_i1car")
+centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
-position = Vector2(180.5, 5)
+[node name="Clouds" type="Parallax2D" parent="Sprites/Backgrounds"]
+scroll_scale = Vector2(0.3, 0.3)
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprites/Backgrounds/Clouds"]
+texture = ExtResource("6_lh1jp")
+centered = false
+
+[node name="ShipDeck" type="Sprite2D" parent="Sprites/Backgrounds"]
+texture = ExtResource("7_excwg")
+centered = false
+
+[node name="ShipDeck2" type="Sprite2D" parent="Sprites/Backgrounds"]
+position = Vector2(-160, 0)
+texture = ExtResource("7_excwg")
+centered = false
+
+[node name="ShipDeck3" type="Sprite2D" parent="Sprites/Backgrounds"]
+position = Vector2(160, 0)
+texture = ExtResource("7_excwg")
+centered = false
+
+[node name="Shadow" type="Sprite2D" parent="Sprites" node_paths=PackedStringArray("player")]
+position = Vector2(60, 93)
+texture = ExtResource("8_knos6")
+script = ExtResource("9_oe4ho")
+player = NodePath("../Poppy")
+
+[node name="Poppy" parent="Sprites" instance=ExtResource("11_u8dcy")]
+position = Vector2(60, 70)
+
+[node name="Skellobone" parent="Sprites" instance=ExtResource("19_ba7dj")]
+position = Vector2(26, 70)
+
+[node name="Ground" type="StaticBody2D" parent="Sprites"]
+position = Vector2(0, 94)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Ground"]
+position = Vector2(160, 2)
 shape = SubResource("RectangleShape2D_11kp1")
+
+[node name="Wall" type="StaticBody2D" parent="Sprites"]
+position = Vector2(0, 106)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Wall"]
+position = Vector2(12.5, -53)
+shape = SubResource("RectangleShape2D_0awgt")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Sprites/Wall"]
+position = Vector2(307, -53)
+shape = SubResource("RectangleShape2D_0awgt")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+physics_interpolation_mode = 1
+position = Vector2(80, 72)
+process_callback = 0
+limit_left = 0
+limit_top = 0
+limit_right = 320
+limit_bottom = 144
+
+[node name="PhantomCameraHost" type="Node" parent="Camera2D"]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("11_y7msq")
+
+[node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
+position = Vector2(80, 72)
+script = ExtResource("12_5nu0o")
+follow_mode = 5
+follow_target = NodePath("../Sprites/Poppy")
+tween_resource = SubResource("Resource_co2ol")
+tween_on_load = false
+dead_zone_width = 0.3
+draw_limits = true
+limit_target = NodePath("../PhantomCameraLimit")
+
+[node name="PhantomCameraLimit" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(160, 72)
+shape = SubResource("RectangleShape2D_nb1xq")
+metadata/_edit_lock_ = true

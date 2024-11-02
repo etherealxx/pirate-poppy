@@ -1,0 +1,217 @@
+[gd_scene load_steps=30 format=3 uid="uid://dxj5yt1cob3oi"]
+
+[ext_resource type="Script" path="res://scripts/skellobone.gd" id="1_26v38"]
+[ext_resource type="Texture2D" uid="uid://cqx8pmmyjnap8" path="res://assets/gamesprites/enemies/skellobone/Kroco_1-Sheet_Idle_2.png" id="1_bmoq2"]
+[ext_resource type="Texture2D" uid="uid://brddlnig6kfhd" path="res://assets/gamesprites/enemies/skellobone/Kroco_1-Sheet_Attack_2.png" id="1_yixjk"]
+[ext_resource type="Texture2D" uid="uid://8xm18us0uw24" path="res://assets/gamesprites/enemies/skellobone/Kroco_1-Sheet_Walk_2.png" id="3_4bngv"]
+[ext_resource type="Texture2D" uid="uid://bo8aunokxyek7" path="res://assets/gamesprites/player/shadow.png" id="5_hao8s"]
+[ext_resource type="Script" path="res://scripts/player_shadow.gd" id="6_in0bo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bcwep"]
+atlas = ExtResource("1_yixjk")
+region = Rect2(0, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2qu1j"]
+atlas = ExtResource("1_yixjk")
+region = Rect2(65, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fvott"]
+atlas = ExtResource("1_yixjk")
+region = Rect2(130, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wxk30"]
+atlas = ExtResource("1_yixjk")
+region = Rect2(195, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r4r3a"]
+atlas = ExtResource("1_yixjk")
+region = Rect2(260, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_alhau"]
+atlas = ExtResource("1_yixjk")
+region = Rect2(325, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a2ytw"]
+atlas = ExtResource("1_yixjk")
+region = Rect2(390, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ni42y"]
+atlas = ExtResource("1_bmoq2")
+region = Rect2(0, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a02sn"]
+atlas = ExtResource("1_bmoq2")
+region = Rect2(65, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jvgj5"]
+atlas = ExtResource("1_bmoq2")
+region = Rect2(130, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rap6l"]
+atlas = ExtResource("1_bmoq2")
+region = Rect2(195, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ef7ig"]
+atlas = ExtResource("1_bmoq2")
+region = Rect2(260, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f8nxs"]
+atlas = ExtResource("1_bmoq2")
+region = Rect2(325, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3nbg4"]
+atlas = ExtResource("3_4bngv")
+region = Rect2(0, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5vvgl"]
+atlas = ExtResource("3_4bngv")
+region = Rect2(65, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qutsf"]
+atlas = ExtResource("3_4bngv")
+region = Rect2(130, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ayprt"]
+atlas = ExtResource("3_4bngv")
+region = Rect2(195, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oonv3"]
+atlas = ExtResource("3_4bngv")
+region = Rect2(260, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hapfy"]
+atlas = ExtResource("3_4bngv")
+region = Rect2(325, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oa4h0"]
+atlas = ExtResource("3_4bngv")
+region = Rect2(390, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_05gqm"]
+atlas = ExtResource("3_4bngv")
+region = Rect2(455, 0, 65, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0qshf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bcwep")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2qu1j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fvott")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wxk30")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r4r3a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_alhau")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a2ytw")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ni42y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a02sn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jvgj5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rap6l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ef7ig")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f8nxs")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3nbg4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5vvgl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qutsf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ayprt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oonv3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hapfy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oa4h0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_05gqm")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 7.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m7a2u"]
+radius = 7.0
+height = 32.0
+
+[node name="Skellobone" type="CharacterBody2D" groups=["enemies"]]
+texture_filter = 1
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_26v38")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_0qshf")
+animation = &"walk"
+autoplay = "idle"
+frame_progress = 0.119226
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
+shape = SubResource("CapsuleShape2D_m7a2u")
+
+[node name="DirectionUpdate" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.8
+autostart = true
+
+[node name="Shadow" type="Sprite2D" parent="."]
+show_behind_parent = true
+position = Vector2(0, 23)
+texture = ExtResource("5_hao8s")
+script = ExtResource("6_in0bo")
+
+[node name="IdleTimer" type="Timer" parent="."]
+process_callback = 0
+one_shot = true
+
+[node name="KnockbackRecoverTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.6
+one_shot = true
+
+[connection signal="timeout" from="DirectionUpdate" to="." method="_on_direction_update_timeout"]
+[connection signal="timeout" from="IdleTimer" to="." method="_on_idle_timer_timeout"]
+[connection signal="timeout" from="KnockbackRecoverTimer" to="." method="_on_knockback_recover_timer_timeout"]
