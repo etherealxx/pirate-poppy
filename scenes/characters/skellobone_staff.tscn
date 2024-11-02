@@ -128,7 +128,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_a2ytw")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack",
 "speed": 7.0
 }, {
@@ -204,9 +204,8 @@ height = 40.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6s4mc"]
 size = Vector2(23, 20)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_esyck"]
-radius = 14.0
-height = 38.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yhalm"]
+size = Vector2(35, 37)
 
 [node name="SkelloboneStaff" type="CharacterBody2D" groups=["enemies"]]
 texture_filter = 1
@@ -220,7 +219,8 @@ material = SubResource("ShaderMaterial_16p87")
 sprite_frames = SubResource("SpriteFrames_0qshf")
 animation = &"attack"
 autoplay = "idle"
-frame_progress = 0.474255
+frame = 6
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 8)
@@ -252,33 +252,31 @@ one_shot = true
 
 [node name="StaffHitbox" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 2
+monitoring = false
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaffHitbox"]
 position = Vector2(12, 0)
 shape = SubResource("CapsuleShape2D_1i0rr")
-disabled = true
 debug_color = Color(0.381848, 0.595654, 0.416095, 0.42)
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="StaffHitbox"]
 position = Vector2(18.5, 14)
 shape = SubResource("RectangleShape2D_6s4mc")
-disabled = true
 debug_color = Color(0.381848, 0.595654, 0.416095, 0.42)
 
 [node name="PlayerDetector" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 2
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector"]
-position = Vector2(21, 5)
-shape = SubResource("CapsuleShape2D_esyck")
+position = Vector2(17.5, 5.5)
+shape = SubResource("RectangleShape2D_yhalm")
 debug_color = Color(0.636956, 0.518996, 0.250381, 0.42)
 
 [connection signal="timeout" from="DirectionUpdate" to="." method="_on_direction_update_timeout"]
 [connection signal="timeout" from="IdleTimer" to="." method="_on_idle_timer_timeout"]
 [connection signal="timeout" from="KnockbackRecoverTimer" to="." method="_on_knockback_recover_timer_timeout"]
 [connection signal="timeout" from="AttackDelay" to="." method="_on_attack_delay_timeout"]
+[connection signal="body_entered" from="StaffHitbox" to="." method="_on_staff_hitbox_body_entered"]
 [connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]

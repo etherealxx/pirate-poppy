@@ -1,11 +1,15 @@
-[gd_scene load_steps=24 format=3 uid="uid://dmg68j8m5x5ye"]
+[gd_scene load_steps=29 format=3 uid="uid://dmg68j8m5x5ye"]
 
 [ext_resource type="FontFile" uid="uid://csg1fdcb5srml" path="res://fonts/monogram-extended.ttf" id="1_ufbd6"]
 [ext_resource type="Material" uid="uid://p5htxu1bwg6u" path="res://resources/gameboy_shadermat.tres" id="1_wbfoc"]
 [ext_resource type="Script" path="res://scripts/menus_and_levels/maingame.gd" id="2_f0ex1"]
 [ext_resource type="Texture2D" uid="uid://dqbmvcc3yinjh" path="res://assets/references/download (3).png" id="2_sfkjw"]
+[ext_resource type="PackedScene" uid="uid://cd6wgx8w4xvuq" path="res://scenes/menus_and_levels/HPUI.tscn" id="4_rkv3t"]
+[ext_resource type="Texture2D" uid="uid://bjl43eegiqj1x" path="res://assets/gamesprites/UI/skull.png" id="5_f0dnj"]
 [ext_resource type="Texture2D" uid="uid://cq0t6q5t1apoy" path="res://assets/gamesprites/backgrounds/sea.png" id="5_i1car"]
+[ext_resource type="Texture2D" uid="uid://slhagiq63q30" path="res://assets/gamesprites/UI/cross.png" id="6_5gfl5"]
 [ext_resource type="Texture2D" uid="uid://cee352accro4x" path="res://assets/gamesprites/backgrounds/clouds2.png" id="6_45fj1"]
+[ext_resource type="FontFile" uid="uid://ckxl5eiumbsa2" path="res://fonts/NotJamOldStyle11/NotJamOldStyle14.ttf" id="7_8ek5r"]
 [ext_resource type="Texture2D" uid="uid://l8yojopkmd5v" path="res://assets/gamesprites/backgrounds/deck.png" id="7_excwg"]
 [ext_resource type="Texture2D" uid="uid://iii7ppol60jd" path="res://assets/gamesprites/backgrounds/deck2d.png" id="8_7y02l"]
 [ext_resource type="Texture2D" uid="uid://bo8aunokxyek7" path="res://assets/gamesprites/shadow.png" id="8_knos6"]
@@ -19,6 +23,10 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_0040m"]
 font = ExtResource("1_ufbd6")
+
+[sub_resource type="LabelSettings" id="LabelSettings_pxupq"]
+font = ExtResource("7_8ek5r")
+font_size = 14
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_11kp1"]
 size = Vector2(373, 7)
@@ -41,11 +49,12 @@ ease = 2
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nb1xq"]
 size = Vector2(499, 144)
 
-[node name="MainPixel" type="Node2D"]
+[node name="MainPixel" type="Node2D" node_paths=PackedStringArray("player")]
 texture_filter = 1
 material = ExtResource("1_wbfoc")
 script = ExtResource("2_f0ex1")
 auto_full_screen = true
+player = NodePath("Sprites/Poppy")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -162,12 +171,82 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="UIBlackBorder" type="ColorRect" parent="CanvasLayer/UI"]
+texture_filter = 1
 layout_mode = 0
 offset_top = 128.0
 offset_right = 160.0
 offset_bottom = 144.0
 size_flags_vertical = 3
 color = Color(0, 0, 0, 1)
+
+[node name="HBoxHP" type="HBoxContainer" parent="CanvasLayer/UI/UIBlackBorder"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 48.0
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="HP1" parent="CanvasLayer/UI/UIBlackBorder/HBoxHP" instance=ExtResource("4_rkv3t")]
+layout_mode = 2
+
+[node name="HP2" parent="CanvasLayer/UI/UIBlackBorder/HBoxHP" instance=ExtResource("4_rkv3t")]
+layout_mode = 2
+
+[node name="HP3" parent="CanvasLayer/UI/UIBlackBorder/HBoxHP" instance=ExtResource("4_rkv3t")]
+layout_mode = 2
+
+[node name="Skull" type="TextureRect" parent="CanvasLayer/UI/UIBlackBorder"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -55.0
+offset_top = -8.0
+offset_right = -39.0
+offset_bottom = 8.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("5_f0dnj")
+stretch_mode = 2
+
+[node name="X" type="TextureRect" parent="CanvasLayer/UI/UIBlackBorder"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -39.0
+offset_top = -5.0
+offset_right = -29.0
+offset_bottom = 5.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("6_5gfl5")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Score" type="Label" parent="CanvasLayer/UI/UIBlackBorder"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -25.0
+offset_top = -1.0
+offset_right = -4.0
+offset_bottom = -1.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "000"
+label_settings = SubResource("LabelSettings_pxupq")
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="Sprites" type="Node2D" parent="."]
 metadata/_edit_lock_ = true

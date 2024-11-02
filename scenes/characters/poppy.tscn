@@ -1,12 +1,20 @@
-[gd_scene load_steps=38 format=3 uid="uid://ddmehvvff8lxn"]
+[gd_scene load_steps=42 format=3 uid="uid://ddmehvvff8lxn"]
 
 [ext_resource type="Script" path="res://scripts/poppy.gd" id="1_7yo6t"]
+[ext_resource type="Shader" path="res://shaders/hitflash.gdshader" id="1_pl5c1"]
 [ext_resource type="Texture2D" uid="uid://cimlt0c3o3uee" path="res://assets/gamesprites/player_poppy/poppy 3 attack.png" id="2_qboue"]
 [ext_resource type="Texture2D" uid="uid://d3res8hgtpsbn" path="res://assets/gamesprites/player_poppy/poppy 3 fall.png" id="3_xrk3w"]
 [ext_resource type="Texture2D" uid="uid://dct7nctmvs0cj" path="res://assets/gamesprites/player_poppy/poppy 3 idle.png" id="4_utyeu"]
 [ext_resource type="Texture2D" uid="uid://ceyhhfyvjf1cw" path="res://assets/gamesprites/player_poppy/poppy 3 jump.png" id="5_7kna2"]
+[ext_resource type="Texture2D" uid="uid://6sk7nikl6n1f" path="res://assets/gamesprites/player_poppy/poppy 3 hurt temp.png" id="5_p2oxs"]
 [ext_resource type="Texture2D" uid="uid://bypv8lblwca4m" path="res://assets/gamesprites/player_poppy/poppy 3 midair.png" id="6_o66wh"]
 [ext_resource type="Texture2D" uid="uid://b6b0hdb4mr64h" path="res://assets/gamesprites/player_poppy/poppy 3 run.png" id="7_j5uhn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_16p87"]
+shader = ExtResource("1_pl5c1")
+shader_parameter/active = false
+shader_parameter/tint = Color(1, 1, 1, 1)
+shader_parameter/flash_interval = 0.15
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a5g0y"]
 atlas = ExtResource("2_qboue")
@@ -39,6 +47,10 @@ region = Rect2(0, 0, 48, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_sg7dp"]
 atlas = ExtResource("3_xrk3w")
 region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ujr8b"]
+atlas = ExtResource("5_p2oxs")
+region = Rect2(0, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8av5q"]
 atlas = ExtResource("4_utyeu")
@@ -150,6 +162,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"fall",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ujr8b")
+}],
+"loop": true,
+"name": &"hurt",
 "speed": 5.0
 }, {
 "frames": [{
@@ -187,7 +207,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"jump",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -238,10 +258,11 @@ collision_mask = 14
 script = ExtResource("1_7yo6t")
 
 [node name="FullBodyAnim" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_16p87")
 sprite_frames = SubResource("SpriteFrames_ew31k")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.163076
+frame_progress = 0.981332
 
 [node name="BodyAnim" type="AnimatedSprite2D" parent="."]
 visible = false
@@ -281,5 +302,17 @@ shape = SubResource("CapsuleShape2D_k8sg5")
 disabled = true
 debug_color = Color(0.381848, 0.595654, 0.416095, 0.42)
 
+[node name="DamagedIframeDuration" type="Timer" parent="."]
+process_callback = 0
+wait_time = 2.0
+one_shot = true
+
+[node name="KnockbackRecoverOnLanding" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.2
+one_shot = true
+
 [connection signal="timeout" from="PositionUpdate" to="." method="_on_position_update_timeout"]
 [connection signal="body_entered" from="SwordHitbox" to="." method="_on_sword_hitbox_body_entered"]
+[connection signal="timeout" from="DamagedIframeDuration" to="." method="_on_damaged_iframe_timeout"]
+[connection signal="timeout" from="KnockbackRecoverOnLanding" to="." method="_on_knockback_recover_on_landing_timeout"]

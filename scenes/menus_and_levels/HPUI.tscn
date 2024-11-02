@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3 uid="uid://cd6wgx8w4xvuq"]
+
+[ext_resource type="Texture2D" uid="uid://t7dsd7wc7ey3" path="res://assets/gamesprites/UI/heart full.png" id="1_k1p6r"]
+[ext_resource type="Script" path="res://scripts/menus_and_levels/hpui.gd" id="2_2u23b"]
+[ext_resource type="Texture2D" uid="uid://c45vvrvds5dum" path="res://assets/gamesprites/UI/heart empty.png" id="3_qiqrk"]
+
+[node name="HP" type="TextureRect"]
+texture = ExtResource("1_k1p6r")
+stretch_mode = 2
+script = ExtResource("2_2u23b")
+texture_list = Array[CompressedTexture2D]([ExtResource("1_k1p6r"), ExtResource("3_qiqrk")])
