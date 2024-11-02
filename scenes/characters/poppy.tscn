@@ -309,7 +309,7 @@ one_shot = true
 
 [node name="KnockbackRecoverOnLanding" type="Timer" parent="."]
 process_callback = 0
-wait_time = 0.2
+wait_time = 0.1
 one_shot = true
 
 [connection signal="timeout" from="PositionUpdate" to="." method="_on_position_update_timeout"]

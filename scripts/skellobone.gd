@@ -6,9 +6,11 @@ const JUMP_VELOCITY = -400.0
 
 @export var parabolic_stat : Parabolic
 @export var hp := 2
+@export var debug_instant_deploy := false
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var staff_hitbox: Area2D = $StaffHitbox
+@onready var player_detector: Area2D = $PlayerDetector
 
 var SPEED = 25.0
 
@@ -20,14 +22,35 @@ var is_flashing := false
 var is_dead := false
 var is_attacking := false
 
-enum State {MOVING, IDLING, ATTACKING, DAMAGED, DEAD}
+enum State {DEPLOYING, MOVING, IDLING, ATTACKING, DAMAGED, DEAD}
 var current_state : State = State.MOVING
 
 func _ready() -> void:
-	current_state = State.MOVING
-	$IdleTimer.start(randf_range(1.0, 4.0))
 	anim.frame_changed.connect(_on_anim_frame_change)
 	anim.animation_finished.connect(_on_animation_finished)
+	if debug_instant_deploy:
+		deploy()
+		return
+	current_state = State.MOVING
+	$IdleTimer.start(randf_range(1.0, 4.0))
+	SPEED = randf_range(20, 30)
+	anim.material = anim.material.duplicate()
+	
+func deploy():
+	current_state = State.DEPLOYING
+	set_z_index(-1)
+	velocity.y = -300.0
+	scale = Vector2.ZERO
+	var tween = create_tween()
+	tween.tween_property(self,
+	"scale",
+	Vector2.ONE, 
+	0.5)
+	tween.tween_callback(_after_deploy)
+	
+func _after_deploy():
+	current_state = State.MOVING
+	$IdleTimer.start(randf_range(1.0, 4.0))
 	
 func change_anim(anim_name : String):
 	if !anim.get_animation() == anim_name: anim.play(anim_name)
@@ -47,22 +70,9 @@ func _physics_process(delta: float) -> void:
 			change_anim("hurt")
 		State.DEAD:
 			velocity.y += parabolic_stat.gravity * delta
-			
-	##if !is_damaged:
-		##velocity = Vector2.ZERO
-	#if !is_dead:
-		#if is_idling:
-			#velocity = Vector2.ZERO
-			#change_anim("idle")
-		#else:
-			#if !is_damaged:
-				#if direction: # and hp > 0:
-					#change_anim("walk")
-				##if anim.animation != "run" and !is_flashing:
-					##anim.animation = "run"
-				#velocity.x = direction * SPEED # * damaged_multiplier
-	#else:
-		#velocity.y += parabolic_stat.gravity * delta
+		State.DEPLOYING:
+			if velocity.y > 0:
+				set_z_index(0)
 		
 	move_and_slide()
 
@@ -74,6 +84,8 @@ func _on_direction_update_timeout() -> void:
 		else:
 			direction = 1.0
 			anim.flip_h = false
+		staff_hitbox.scale.x = direction
+		player_detector.scale.x = direction
 
 func _on_idle_timer_timeout() -> void:
 	if current_state in [State.MOVING, State.IDLING]:
@@ -83,7 +95,7 @@ func _on_idle_timer_timeout() -> void:
 				for body in bodies:
 					if body.is_in_group("player"):
 						current_state = State.MOVING
-						$AttackDelay.start(0.2)
+						$AttackDelay.start(randf_range(0.2, 0.2))
 						#_on_attack_delay_timeout()
 						return
 				current_state = State.MOVING
@@ -107,7 +119,7 @@ func take_damage(is_player_facing_right : bool):
 	else:
 		current_state = State.DAMAGED
 		var knockback_direction = 1.0 if is_player_facing_right else -1.0
-		velocity = Vector2(50 * knockback_direction, -200)
+		velocity = Vector2(randf_range(40, 60) * knockback_direction, -200)
 	#velocity.x = SPEED # * damaged_multiplier
 	#velocity.y = -300.0
 	hp -= 1
@@ -153,7 +165,7 @@ func _on_anim_frame_change():
 
 func _on_player_detector_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
-		$AttackDelay.start(randf_range(0.1, 0.6))
+		$AttackDelay.start(randf_range(0.2, 0.7))
 
 func _on_attack_delay_timeout() -> void:
 	current_state = State.ATTACKING

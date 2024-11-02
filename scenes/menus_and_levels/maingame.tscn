@@ -1,10 +1,10 @@
-[gd_scene load_steps=29 format=3 uid="uid://dmg68j8m5x5ye"]
+[gd_scene load_steps=30 format=3 uid="uid://dmg68j8m5x5ye"]
 
-[ext_resource type="FontFile" uid="uid://csg1fdcb5srml" path="res://fonts/monogram-extended.ttf" id="1_ufbd6"]
 [ext_resource type="Material" uid="uid://p5htxu1bwg6u" path="res://resources/gameboy_shadermat.tres" id="1_wbfoc"]
 [ext_resource type="Script" path="res://scripts/menus_and_levels/maingame.gd" id="2_f0ex1"]
 [ext_resource type="Texture2D" uid="uid://dqbmvcc3yinjh" path="res://assets/references/download (3).png" id="2_sfkjw"]
 [ext_resource type="PackedScene" uid="uid://cd6wgx8w4xvuq" path="res://scenes/menus_and_levels/HPUI.tscn" id="4_rkv3t"]
+[ext_resource type="Texture2D" uid="uid://cys551f3spd4g" path="res://assets/gamesprites/UI/clock.png" id="5_11pmp"]
 [ext_resource type="Texture2D" uid="uid://bjl43eegiqj1x" path="res://assets/gamesprites/UI/skull.png" id="5_f0dnj"]
 [ext_resource type="Texture2D" uid="uid://cq0t6q5t1apoy" path="res://assets/gamesprites/backgrounds/sea.png" id="5_i1car"]
 [ext_resource type="Texture2D" uid="uid://slhagiq63q30" path="res://assets/gamesprites/UI/cross.png" id="6_5gfl5"]
@@ -19,14 +19,18 @@
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="12_5nu0o"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="13_fl05v"]
 [ext_resource type="Texture2D" uid="uid://dmh5tg0fnq0ij" path="res://assets/gamesprites/backgrounds/deck2-foreground.png" id="13_oeyh4"]
+[ext_resource type="PackedScene" uid="uid://bpm7aqcxgaoxb" path="res://scenes/enemy_spawner.tscn" id="18_dbdff"]
 [ext_resource type="PackedScene" uid="uid://dxj5yt1cob3oi" path="res://scenes/characters/skellobone_staff.tscn" id="19_ba7dj"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_0040m"]
-font = ExtResource("1_ufbd6")
 
 [sub_resource type="LabelSettings" id="LabelSettings_pxupq"]
 font = ExtResource("7_8ek5r")
 font_size = 14
+
+[sub_resource type="LabelSettings" id="LabelSettings_hr2bt"]
+line_spacing = -1.88
+font = ExtResource("7_8ek5r")
+font_size = 14
+shadow_color = Color(0, 0, 0, 0.572549)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_11kp1"]
 size = Vector2(373, 7)
@@ -55,6 +59,7 @@ material = ExtResource("1_wbfoc")
 script = ExtResource("2_f0ex1")
 auto_full_screen = true
 player = NodePath("Sprites/Poppy")
+every_enemies = Array[PackedScene]([ExtResource("19_ba7dj")])
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -74,94 +79,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Reference" type="VBoxContainer" parent="CanvasLayer/UI"]
-visible = false
-texture_filter = 1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Sky" type="ReferenceRect" parent="CanvasLayer/UI/Reference"]
-custom_minimum_size = Vector2(0, 64.455)
-layout_mode = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/UI/Reference/Sky"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Sky"
-label_settings = SubResource("LabelSettings_0040m")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Sea" type="ReferenceRect" parent="CanvasLayer/UI/Reference"]
-custom_minimum_size = Vector2(0, 57.785)
-layout_mode = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/UI/Reference/Sea"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 4.0
-offset_top = -21.8925
-offset_right = 44.0
-offset_bottom = 1.1075
-grow_horizontal = 2
-grow_vertical = 2
-text = "Sea"
-label_settings = SubResource("LabelSettings_0040m")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Sea2" type="ReferenceRect" parent="CanvasLayer/UI/Reference/Sea"]
-layout_mode = 1
-offset_left = 4.0
-offset_top = 29.0
-offset_right = 156.0
-offset_bottom = 45.0
-border_color = Color(0.446012, 0.595658, 0.062274, 1)
-
-[node name="Label" type="Label" parent="CanvasLayer/UI/Reference/Sea/Sea2"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -69.0
-offset_top = -16.0
-offset_right = -29.0
-offset_bottom = 7.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Ground"
-label_settings = SubResource("LabelSettings_0040m")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Sea3" type="ReferenceRect" parent="CanvasLayer/UI/Reference/Sea"]
-layout_mode = 1
-offset_left = 4.0
-offset_top = 38.0
-offset_right = 156.0
-offset_bottom = 45.0
-border_color = Color(0.50934, 0.454874, 0.917264, 1)
 
 [node name="ReferenceRect" type="ReferenceRect" parent="CanvasLayer/UI"]
 visible = false
@@ -196,6 +113,42 @@ layout_mode = 2
 
 [node name="HP3" parent="CanvasLayer/UI/UIBlackBorder/HBoxHP" instance=ExtResource("4_rkv3t")]
 layout_mode = 2
+
+[node name="Clock" type="TextureRect" parent="CanvasLayer/UI/UIBlackBorder"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -21.0
+offset_top = -8.0
+offset_right = -5.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_11pmp")
+stretch_mode = 2
+
+[node name="Countdown" type="Label" parent="CanvasLayer/UI/UIBlackBorder"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.5
+offset_top = -8.0
+offset_right = 12.5
+offset_bottom = 6.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "60
+"
+label_settings = SubResource("LabelSettings_pxupq")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Skull" type="TextureRect" parent="CanvasLayer/UI/UIBlackBorder"]
 layout_mode = 1
@@ -248,6 +201,26 @@ label_settings = SubResource("LabelSettings_pxupq")
 horizontal_alignment = 2
 vertical_alignment = 1
 
+[node name="Hint" type="Label" parent="CanvasLayer/UI"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.0
+offset_top = -72.0
+offset_right = 78.0
+offset_bottom = -45.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "J to attack
+R to reset game"
+label_settings = SubResource("LabelSettings_hr2bt")
+horizontal_alignment = 2
+vertical_alignment = 1
+
 [node name="Sprites" type="Node2D" parent="."]
 metadata/_edit_lock_ = true
 
@@ -260,15 +233,18 @@ centered = false
 [node name="Backgrounds" type="Node2D" parent="Sprites"]
 
 [node name="Sea" type="Parallax2D" parent="Sprites/Backgrounds"]
+z_index = -1
 scroll_scale = Vector2(0.1, 0.1)
 scroll_offset = Vector2(-58, 0)
 repeat_size = Vector2(400, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Sprites/Backgrounds/Sea"]
+position = Vector2(-6, 0)
 texture = ExtResource("5_i1car")
 centered = false
 
 [node name="Clouds" type="Parallax2D" parent="Sprites/Backgrounds"]
+z_index = -1
 scroll_scale = Vector2(0.3, 0.3)
 scroll_offset = Vector2(-58, 0)
 repeat_size = Vector2(500, 0)
@@ -314,10 +290,40 @@ player = NodePath("../Poppy")
 [node name="Poppy" parent="Sprites" instance=ExtResource("11_u8dcy")]
 position = Vector2(123, 70)
 
-[node name="Skellobone" parent="Sprites" instance=ExtResource("19_ba7dj")]
-position = Vector2(-2, 22)
+[node name="Enemies" type="Node2D" parent="Sprites"]
+unique_name_in_owner = true
+
+[node name="EnemySpawners" type="Node2D" parent="Sprites"]
+unique_name_in_owner = true
+visible = false
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="Spawner" parent="Sprites/EnemySpawners" instance=ExtResource("18_dbdff")]
+
+[node name="Spawner2" parent="Sprites/EnemySpawners" instance=ExtResource("18_dbdff")]
+position = Vector2(-9, 22)
+
+[node name="Spawner3" parent="Sprites/EnemySpawners" instance=ExtResource("18_dbdff")]
+position = Vector2(395, 53)
+
+[node name="Spawner4" parent="Sprites/EnemySpawners" instance=ExtResource("18_dbdff")]
+position = Vector2(425, 53)
+
+[node name="Spawner5" parent="Sprites/EnemySpawners" instance=ExtResource("18_dbdff")]
+position = Vector2(334, 69)
+is_deploy = true
+
+[node name="Spawner6" parent="Sprites/EnemySpawners" instance=ExtResource("18_dbdff")]
+position = Vector2(214, 69)
+is_deploy = true
+
+[node name="Spawner7" parent="Sprites/EnemySpawners" instance=ExtResource("18_dbdff")]
+position = Vector2(119, 69)
+is_deploy = true
 
 [node name="Grounds" type="Node2D" parent="Sprites"]
+z_index = 1
 
 [node name="Ground" type="StaticBody2D" parent="Sprites/Grounds"]
 position = Vector2(0, 94)
@@ -346,32 +352,35 @@ collision_mask = 0
 position = Vector2(412, -13)
 shape = SubResource("RectangleShape2D_htdet")
 
-[node name="PoppyWall" type="StaticBody2D" parent="Sprites"]
+[node name="Walls" type="Node2D" parent="Sprites"]
+z_index = 1
+
+[node name="PoppyWall" type="StaticBody2D" parent="Sprites/Walls"]
 position = Vector2(0, 106)
 collision_layer = 8
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/PoppyWall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Walls/PoppyWall"]
 position = Vector2(38, -53)
 shape = SubResource("RectangleShape2D_0awgt")
 debug_color = Color(0.372224, 0.610655, 0.212997, 0.42)
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Sprites/PoppyWall"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Sprites/Walls/PoppyWall"]
 position = Vector2(374, -53)
 shape = SubResource("RectangleShape2D_0awgt")
 debug_color = Color(0.372549, 0.611765, 0.211765, 0.419608)
 
-[node name="Wall2" type="StaticBody2D" parent="Sprites"]
+[node name="Wall2" type="StaticBody2D" parent="Sprites/Walls"]
 position = Vector2(0, 106)
 collision_layer = 8
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Wall2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Walls/Wall2"]
 position = Vector2(13, -31.8125)
 shape = SubResource("RectangleShape2D_kfbxd")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Sprites/Wall2"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Sprites/Walls/Wall2"]
 position = Vector2(382, -11)
 shape = SubResource("RectangleShape2D_kfbxd")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
@@ -397,7 +406,7 @@ follow_mode = 5
 follow_target = NodePath("../Sprites/Poppy")
 tween_resource = SubResource("Resource_co2ol")
 tween_on_load = false
-dead_zone_width = 0.3
+dead_zone_width = 0.2
 draw_limits = true
 limit_target = NodePath("../PhantomCameraLimit")
 
@@ -405,3 +414,16 @@ limit_target = NodePath("../PhantomCameraLimit")
 visible = false
 position = Vector2(193.5, 72)
 shape = SubResource("RectangleShape2D_nb1xq")
+
+[node name="EnemySpawnTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.7
+one_shot = true
+autostart = true
+
+[node name="SecondTimer" type="Timer" parent="."]
+process_callback = 0
+autostart = true
+
+[connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]
+[connection signal="timeout" from="SecondTimer" to="." method="_on_second_timer_timeout"]

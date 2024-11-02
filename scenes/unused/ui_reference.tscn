@@ -1,0 +1,93 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvhrwy5s1qq4n"]
+
+[ext_resource type="FontFile" uid="uid://csg1fdcb5srml" path="res://fonts/monogram-extended.ttf" id="1_f434g"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_0040m"]
+font = ExtResource("1_f434g")
+
+[node name="Reference" type="VBoxContainer"]
+visible = false
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sky" type="ReferenceRect" parent="."]
+custom_minimum_size = Vector2(0, 64.455)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Sky"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Sky"
+label_settings = SubResource("LabelSettings_0040m")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sea" type="ReferenceRect" parent="."]
+custom_minimum_size = Vector2(0, 57.785)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Sea"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 4.0
+offset_top = -21.8925
+offset_right = 44.0
+offset_bottom = 1.1075
+grow_horizontal = 2
+grow_vertical = 2
+text = "Sea"
+label_settings = SubResource("LabelSettings_0040m")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sea2" type="ReferenceRect" parent="Sea"]
+layout_mode = 1
+offset_left = 4.0
+offset_top = 29.0
+offset_right = 156.0
+offset_bottom = 45.0
+border_color = Color(0.446012, 0.595658, 0.062274, 1)
+
+[node name="Label" type="Label" parent="Sea/Sea2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = -16.0
+offset_right = -29.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Ground"
+label_settings = SubResource("LabelSettings_0040m")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sea3" type="ReferenceRect" parent="Sea"]
+layout_mode = 1
+offset_left = 4.0
+offset_top = 38.0
+offset_right = 156.0
+offset_bottom = 45.0
+border_color = Color(0.50934, 0.454874, 0.917264, 1)

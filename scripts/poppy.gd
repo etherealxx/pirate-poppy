@@ -86,6 +86,7 @@ func _physics_process(delta: float) -> void:
 			if is_on_floor() and land_to_move:
 				land_to_move = false
 				current_state = State.MOVABLE
+				velocity.x = 0.0
 		State.MOVABLE:
 			if is_on_floor():
 				if Input.is_action_just_pressed("action") and !is_flashing:
@@ -160,6 +161,7 @@ func take_damage(is_enemy_facing_right : bool):
 		pass
 	full_body_anim.get_material().set_shader_parameter("active", true)
 	set_collision_mask(CollisionCalc.mask([3,4]))
+	sync_change_anim("hurt")
 	$DamagedIframeDuration.start()
 	$KnockbackRecoverOnLanding.start()
 	#$KnockbackRecoverTimer.start()

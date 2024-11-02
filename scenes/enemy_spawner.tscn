@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://bpm7aqcxgaoxb"]
+
+[ext_resource type="Script" path="res://scripts/spawner.gd" id="1_mrsgk"]
+[ext_resource type="Texture2D" uid="uid://cqx8pmmyjnap8" path="res://assets/gamesprites/enemies/skellobone/Kroco_1-Sheet_Idle_2.png" id="2_a6h7a"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_17gls"]
+atlas = ExtResource("2_a6h7a")
+region = Rect2(0, 0, 65, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_novwe"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_17gls")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Spawner" type="Marker2D"]
+position = Vector2(-37, 22)
+script = ExtResource("1_mrsgk")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+process_mode = 4
+self_modulate = Color(1, 1, 1, 0.247059)
+position = Vector2(-3, 0)
+sprite_frames = SubResource("SpriteFrames_novwe")
