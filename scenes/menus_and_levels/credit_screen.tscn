@@ -1,0 +1,182 @@
+[gd_scene load_steps=20 format=3 uid="uid://ee214uqpf00q"]
+
+[ext_resource type="FontFile" uid="uid://csg1fdcb5srml" path="res://fonts/monogram-extended.ttf" id="1_2qha8"]
+[ext_resource type="Texture2D" uid="uid://bojk6gen3fkle" path="res://assets/gamesprites/credits/egothystical_logo.png" id="1_g5ps8"]
+[ext_resource type="Script" path="res://scripts/credit_screen.gd" id="1_xvp5l"]
+[ext_resource type="Script" path="res://scripts/skellobone_credit.gd" id="2_lh2hh"]
+[ext_resource type="Shader" path="res://shaders/hitflash.gdshader" id="3_scave"]
+[ext_resource type="Texture2D" uid="uid://8xm18us0uw24" path="res://assets/gamesprites/enemies/skellobone/Kroco_1-Sheet_Walk_2.png" id="7_i57n7"]
+[ext_resource type="Script" path="res://scripts/black_fade_credit.gd" id="8_t3qa0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_16p87"]
+shader = ExtResource("3_scave")
+shader_parameter/active = false
+shader_parameter/tint = Color(1, 1, 1, 1)
+shader_parameter/flash_interval = 0.15
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3nbg4"]
+atlas = ExtResource("7_i57n7")
+region = Rect2(0, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5vvgl"]
+atlas = ExtResource("7_i57n7")
+region = Rect2(65, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qutsf"]
+atlas = ExtResource("7_i57n7")
+region = Rect2(130, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ayprt"]
+atlas = ExtResource("7_i57n7")
+region = Rect2(195, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oonv3"]
+atlas = ExtResource("7_i57n7")
+region = Rect2(260, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hapfy"]
+atlas = ExtResource("7_i57n7")
+region = Rect2(325, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oa4h0"]
+atlas = ExtResource("7_i57n7")
+region = Rect2(390, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_05gqm"]
+atlas = ExtResource("7_i57n7")
+region = Rect2(455, 0, 65, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sn3j7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3nbg4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5vvgl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qutsf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ayprt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oonv3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hapfy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oa4h0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_05gqm")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 7.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m7a2u"]
+radius = 7.0
+height = 32.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_c2jcx"]
+line_spacing = -2.0
+font = ExtResource("1_2qha8")
+font_color = Color(0.572549, 0.407843, 0.678431, 1)
+
+[node name="CreditScreen" type="Node2D"]
+script = ExtResource("1_xvp5l")
+auto_full_screen = true
+main_menu_scene = "res://scenes/menus_and_levels/main_menu.tscn"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BlackBackground" type="ColorRect" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ReferenceRect" type="ReferenceRect" parent="CanvasLayer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="EgothysticalLogo" type="TextureRect" parent="CanvasLayer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 27.095)
+layout_mode = 2
+texture = ExtResource("1_g5ps8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ReferenceRect2" type="ReferenceRect" parent="CanvasLayer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="SkelloboneCredit" type="CharacterBody2D" parent="CanvasLayer/Control/VBoxContainer" groups=["enemies"]]
+texture_filter = 1
+position = Vector2(-15, 55)
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("2_lh2hh")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/Control/VBoxContainer/SkelloboneCredit"]
+material = SubResource("ShaderMaterial_16p87")
+sprite_frames = SubResource("SpriteFrames_sn3j7")
+animation = &"walk"
+autoplay = "walk"
+frame_progress = 0.91029
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Control/VBoxContainer/SkelloboneCredit"]
+position = Vector2(0, 8)
+shape = SubResource("CapsuleShape2D_m7a2u")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(71, 0)
+layout_mode = 2
+size_flags_vertical = 3
+text = "(c) 2024 Egothystical
+Etherealxx, Lantang Indrarto, Sultan Syahrul
+Engine : Godot (godotengine.org/license)"
+label_settings = SubResource("LabelSettings_c2jcx")
+horizontal_alignment = 1
+vertical_alignment = 2
+autowrap_mode = 3
+
+[node name="ReferenceRect3" type="ReferenceRect" parent="CanvasLayer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 4.01)
+layout_mode = 2
+
+[node name="BlackFadeCredit" type="ColorRect" parent="CanvasLayer/Control"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("8_t3qa0")

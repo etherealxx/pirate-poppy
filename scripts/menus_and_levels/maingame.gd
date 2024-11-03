@@ -3,15 +3,29 @@ extends Node2D
 @export var auto_full_screen := false
 @export var player : CharacterBody2D
 @export var every_enemies : Array[PackedScene]
+@export_file("*.tscn") var game_over_scene
+@export_file("*.tscn") var ending_scene
 
 var score := 0
 var round_duration := 60
 
 func _ready() -> void:
+	Engine.set_time_scale(1.0)
 	if auto_full_screen:
 		get_window().set_mode(Window.MODE_MAXIMIZED)
 	if player:
 		player.hp_updated.connect(_on_player_hp_updated)
+	get_tree().paused = true
+	%BlackFadeGame.show()
+	%BlackFadeGame.initial_fade.connect(_on_enter_game_fade_finished)
+	%BlackFadeGame.fade_finished.connect(_on_exit_game_fade_finished)
+
+func _on_enter_game_fade_finished():
+	get_tree().paused = false
+
+func _on_exit_game_fade_finished():
+	get_tree().paused = false
+	get_tree().change_scene_to_file(game_over_scene)
 
 func _on_player_hp_updated(hp):
 	for hpicon in %HBoxHP.get_children():
@@ -19,6 +33,13 @@ func _on_player_hp_updated(hp):
 			#hpicon.visible = int(hpicon.name.trim_prefix("HP")) <= hp
 			if int(hpicon.name.trim_prefix("HP")) <= hp: hpicon.filled_heart()
 			else: hpicon.empty_heart()
+	if hp <= 0:
+		Engine.set_time_scale(0.8)
+		await get_tree().create_timer(1.0, true, true).timeout
+		Engine.set_time_scale(1.0)
+		get_tree().paused = true
+		%BlackFadeGame.do_fade_out()
+		
 
 func instantiate_from_random_spawner(	spawnergroup_node : Node2D,
 										target_groupnode : Node2D,
@@ -52,7 +73,9 @@ func _on_second_timer_timeout() -> void:
 	if round_duration > 0:
 		round_duration -= 1
 	%Countdown.text = str(round_duration).pad_zeros(2)
+	if round_duration < 30:
+		get_tree().change_scene_to_file(ending_scene)
 
-func _unhandled_input(event: InputEvent) -> void:
+func _unhandled_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("debug_reset_button"):
 		get_tree().reload_current_scene()

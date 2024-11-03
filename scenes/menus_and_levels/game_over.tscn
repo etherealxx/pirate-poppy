@@ -1,0 +1,209 @@
+[gd_scene load_steps=14 format=3 uid="uid://dnpmbxnvxo8pw"]
+
+[ext_resource type="Script" path="res://scripts/game_over.gd" id="1_2150x"]
+[ext_resource type="Texture2D" uid="uid://ctmebrq2qrkdt" path="res://assets/gamesprites/skeletons.png" id="4_7hmaf"]
+[ext_resource type="Texture2D" uid="uid://bo8aunokxyek7" path="res://assets/gamesprites/shadow.png" id="4_a7kht"]
+[ext_resource type="Texture2D" uid="uid://bpqk26laalfc8" path="res://assets/gamesprites/player_poppy/poppy_ded.png" id="5_djtgc"]
+[ext_resource type="FontFile" uid="uid://jmpcwjr1ala4" path="res://fonts/NotJamSlabSerif11/NotJamSlabSerif11.ttf" id="6_2c5o8"]
+[ext_resource type="FontFile" uid="uid://cyl75ei7tojve" path="res://fonts/m5x7.ttf" id="6_pyq00"]
+[ext_resource type="Script" path="res://scripts/black_fade_menu.gd" id="7_14k2p"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_i0jvx"]
+line_spacing = -2.0
+font = ExtResource("6_2c5o8")
+font_size = 22
+font_color = Color(0.303713, 0.0443091, 0.0794361, 1)
+outline_size = 9
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_l2vyj"]
+line_spacing = -2.0
+font = ExtResource("6_pyq00")
+font_color = Color(0.572549, 0.407843, 0.678431, 1)
+outline_size = 9
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_x4s31"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/VBoxContainer/ReferenceRect3:custom_minimum_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 18)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Control/Node2D/Skulls:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_vqm5b"]
+resource_name = "game_over_anim"
+length = 8.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/VBoxContainer/ReferenceRect3:custom_minimum_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4, 5, 6, 7, 8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 10), Vector2(0, 13), Vector2(0, 10), Vector2(0, 13), Vector2(0, 10), Vector2(0, 13), Vector2(0, 10), Vector2(0, 13), Vector2(0, 10)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Control/Node2D/Skulls:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 4, 8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-40, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_5qshm"]
+resource_name = "ref_move_for_text_bounce"
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/VBoxContainer/ReferenceRect3:custom_minimum_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 18), Vector2(0, 23), Vector2(0, 18)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m26v7"]
+_data = {
+"RESET": SubResource("Animation_x4s31"),
+"game_over_anim": SubResource("Animation_vqm5b"),
+"ref_move_for_text_bounce": SubResource("Animation_5qshm")
+}
+
+[node name="GameOver" type="Node2D"]
+script = ExtResource("1_2150x")
+main_menu_scene = "res://scenes/menus_and_levels/main_menu.tscn"
+main_gameplay_scene = "res://scenes/menus_and_levels/maingame.tscn"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BlackBackground" type="ColorRect" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Node2D" type="Node2D" parent="CanvasLayer/Control"]
+texture_filter = 1
+
+[node name="Skulls" type="Sprite2D" parent="CanvasLayer/Control/Node2D"]
+self_modulate = Color(0.4, 0.4, 0.4, 1)
+texture = ExtResource("4_7hmaf")
+centered = false
+
+[node name="Sprite2D2" type="Sprite2D" parent="CanvasLayer/Control/Node2D"]
+visible = false
+position = Vector2(80, 92.5)
+scale = Vector2(1.5625, 1.5625)
+texture = ExtResource("4_a7kht")
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control/Node2D"]
+visible = false
+position = Vector2(80, 69)
+texture = ExtResource("5_djtgc")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ReferenceRect" type="ReferenceRect" parent="CanvasLayer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(71, 0)
+layout_mode = 2
+size_flags_vertical = 1
+text = "Game Over"
+label_settings = SubResource("LabelSettings_i0jvx")
+horizontal_alignment = 1
+vertical_alignment = 2
+autowrap_mode = 3
+
+[node name="ReferenceRect2" type="ReferenceRect" parent="CanvasLayer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(71, 0)
+layout_mode = 2
+size_flags_vertical = 3
+text = "Press J to restart
+Press K to go to Main Menu"
+label_settings = SubResource("LabelSettings_l2vyj")
+horizontal_alignment = 1
+vertical_alignment = 2
+autowrap_mode = 3
+
+[node name="ReferenceRect3" type="ReferenceRect" parent="CanvasLayer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+
+[node name="BlackFadeMenu" type="ColorRect" parent="CanvasLayer/Control"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("7_14k2p")
+fade_in_duration = 1.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_m26v7")
+}
+autoplay = "ref_move_for_text_bounce"

@@ -1,9 +1,9 @@
-[gd_scene load_steps=30 format=3 uid="uid://dmg68j8m5x5ye"]
+[gd_scene load_steps=31 format=3 uid="uid://dmg68j8m5x5ye"]
 
 [ext_resource type="Material" uid="uid://p5htxu1bwg6u" path="res://resources/gameboy_shadermat.tres" id="1_wbfoc"]
 [ext_resource type="Script" path="res://scripts/menus_and_levels/maingame.gd" id="2_f0ex1"]
 [ext_resource type="Texture2D" uid="uid://dqbmvcc3yinjh" path="res://assets/references/download (3).png" id="2_sfkjw"]
-[ext_resource type="PackedScene" uid="uid://cd6wgx8w4xvuq" path="res://scenes/menus_and_levels/HPUI.tscn" id="4_rkv3t"]
+[ext_resource type="PackedScene" uid="uid://cd6wgx8w4xvuq" path="res://scenes/HPUI.tscn" id="4_rkv3t"]
 [ext_resource type="Texture2D" uid="uid://cys551f3spd4g" path="res://assets/gamesprites/UI/clock.png" id="5_11pmp"]
 [ext_resource type="Texture2D" uid="uid://bjl43eegiqj1x" path="res://assets/gamesprites/UI/skull.png" id="5_f0dnj"]
 [ext_resource type="Texture2D" uid="uid://cq0t6q5t1apoy" path="res://assets/gamesprites/backgrounds/sea.png" id="5_i1car"]
@@ -14,11 +14,12 @@
 [ext_resource type="Texture2D" uid="uid://iii7ppol60jd" path="res://assets/gamesprites/backgrounds/deck2d.png" id="8_7y02l"]
 [ext_resource type="Texture2D" uid="uid://bo8aunokxyek7" path="res://assets/gamesprites/shadow.png" id="8_knos6"]
 [ext_resource type="Script" path="res://scripts/player_shadow.gd" id="9_oe4ho"]
+[ext_resource type="Script" path="res://scripts/black_fade_game.gd" id="9_u4yud"]
 [ext_resource type="PackedScene" uid="uid://ddmehvvff8lxn" path="res://scenes/characters/poppy.tscn" id="11_u8dcy"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="11_y7msq"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="12_5nu0o"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="13_fl05v"]
-[ext_resource type="Texture2D" uid="uid://dmh5tg0fnq0ij" path="res://assets/gamesprites/backgrounds/deck2-foreground.png" id="13_oeyh4"]
+[ext_resource type="Texture2D" uid="uid://caquan53f6yl5" path="res://assets/gamesprites/backgrounds/deck2-foreground2.png" id="14_ipy2l"]
 [ext_resource type="PackedScene" uid="uid://bpm7aqcxgaoxb" path="res://scenes/enemy_spawner.tscn" id="18_dbdff"]
 [ext_resource type="PackedScene" uid="uid://dxj5yt1cob3oi" path="res://scenes/characters/skellobone_staff.tscn" id="19_ba7dj"]
 
@@ -57,9 +58,10 @@ size = Vector2(499, 144)
 texture_filter = 1
 material = ExtResource("1_wbfoc")
 script = ExtResource("2_f0ex1")
-auto_full_screen = true
 player = NodePath("Sprites/Poppy")
 every_enemies = Array[PackedScene]([ExtResource("19_ba7dj")])
+game_over_scene = "res://scenes/menus_and_levels/game_over.tscn"
+ending_scene = "res://scenes/menus_and_levels/ending_screen.tscn"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -202,6 +204,7 @@ horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="Hint" type="Label" parent="CanvasLayer/UI"]
+visible = false
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 8
@@ -220,6 +223,19 @@ R to reset game"
 label_settings = SubResource("LabelSettings_hr2bt")
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[node name="BlackFadeGame" type="ColorRect" parent="CanvasLayer/UI"]
+unique_name_in_owner = true
+process_mode = 2
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("9_u4yud")
 
 [node name="Sprites" type="Node2D" parent="."]
 metadata/_edit_lock_ = true
@@ -278,7 +294,7 @@ centered = false
 [node name="DeckForeground" type="Sprite2D" parent="Sprites/Backgrounds"]
 z_index = 1
 position = Vector2(-57, 0)
-texture = ExtResource("13_oeyh4")
+texture = ExtResource("14_ipy2l")
 centered = false
 
 [node name="Shadow" type="Sprite2D" parent="Sprites" node_paths=PackedStringArray("player")]
@@ -357,7 +373,7 @@ z_index = 1
 
 [node name="PoppyWall" type="StaticBody2D" parent="Sprites/Walls"]
 position = Vector2(0, 106)
-collision_layer = 8
+collision_layer = 32
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Walls/PoppyWall"]
