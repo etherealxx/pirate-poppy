@@ -23,7 +23,10 @@ var land_to_move := false
 var hp := 3
 var hair_out := false
 
-enum State {MOVABLE, IDLING, ATTACKING, DAMAGED, DEAD}
+const MAX_BLOCK_FUEL := 140
+var block_fuel := MAX_BLOCK_FUEL
+
+enum State {MOVABLE, IDLING, ATTACKING, DAMAGED, DEAD, BLOCKING}
 var current_state : State = State.MOVABLE
 
 func swordhitbox_enabled(is_enabled : bool):
@@ -85,8 +88,7 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	
-	if $DebugState.visible:
-		$DebugState.text = str(current_state)
+	if $DebugState.visible: $DebugState.text = str(current_state)
 	
 	match (current_state):
 		State.DAMAGED:
@@ -94,6 +96,17 @@ func _physics_process(delta: float) -> void:
 				land_to_move = false
 				current_state = State.MOVABLE
 				velocity.x = 0.0
+		State.BLOCKING:
+			if Input.is_action_pressed("action2") and block_fuel > 0:
+				block_fuel -= 1
+				sync_change_anim("block")
+				if $ShieldKnockDuration.time_left > 0:
+					velocity.x = move_toward(velocity.x, 0, 1) # slowing speed
+				else: velocity.x = move_toward(velocity.x, 0, SPEED)
+			else:
+				sync_change_anim("idle")
+				is_attacking = false
+				current_state = State.MOVABLE
 		State.MOVABLE:
 			if is_on_floor():
 				if Input.is_action_just_pressed("action"):
@@ -103,6 +116,12 @@ func _physics_process(delta: float) -> void:
 					velocity.x = 0.0
 					swordhitbox_enabled(false)
 					sync_change_anim("attack")
+				elif Input.is_action_just_pressed("action2") and !is_attacking and block_fuel > 60: # block
+					block_fuel -= 10
+					velocity.x = 0.0
+					current_state = State.BLOCKING
+				if !Input.is_action_pressed("action2") and block_fuel < MAX_BLOCK_FUEL:
+					block_fuel += 1
 					
 			if !is_attacking:
 				# Handle jump.
@@ -127,7 +146,8 @@ func _physics_process(delta: float) -> void:
 		State.DEAD:
 			if is_on_floor() and land_to_move:
 				sync_change_anim("knocked")
-			
+	
+	if $DebugFuel.visible: $DebugFuel.text = str(block_fuel)
 	move_and_slide()
 
 func _on_position_update_timeout() -> void:
@@ -159,29 +179,46 @@ func take_damage(is_enemy_facing_right : bool):
 	#damaged_multiplier = 0.5
 	#$FlashRecover.start()
 	#is_idling = false
-	is_flashing = true
+	var is_colliding_wall = false
 	
-	current_state = State.DAMAGED
-	var knockback_direction = 1.0 if is_enemy_facing_right else -1.0
-	velocity = Vector2(70 * knockback_direction, -250)
-	#velocity.x = SPEED # * damaged_multiplier
-	#velocity.y = -300.0
-	hp -= 1
-	hp_updated.emit(hp)
-	if hp == 1 and !hair_out:
-		hair_out = true
-		$FullBodyAnim.hide()
-		$HairOpenAnim.show()
-		call_deferred("throw_bandana")
-	full_body_anim.get_material().set_shader_parameter("active", true)
-	set_collision_mask(CollisionCalc.mask([3,5,6]))
-	is_attacking = false
-	sync_change_anim("hurt")
-	$DamagedIframeDuration.start()
-	$KnockbackRecoverOnLanding.start()
-	if hp <= 0:
-		current_state = State.DEAD
-	#$KnockbackRecoverTimer.start()
+	#@TODO this cannot work somehow
+	#var bodies = $PoppyWallDetector.get_overlapping_bodies()
+	#if !bodies.is_empty():
+		#for body in bodies:
+			#print(body.name)
+			#if body.is_in_group("poppy_wall"):
+				#is_colliding_wall = true
+				#break
+	
+	if current_state == State.BLOCKING \
+	and (is_enemy_facing_right == full_body_anim.flip_h) and !is_colliding_wall: #opposite direction
+		var knockback_direction = 1.0 if is_enemy_facing_right else -1.0
+		velocity = Vector2(70 * knockback_direction, 0)
+		$ShieldKnockDuration.start()
+	else:
+		is_flashing = true
+		
+		current_state = State.DAMAGED
+		var knockback_direction = 1.0 if is_enemy_facing_right else -1.0
+		velocity = Vector2(70 * knockback_direction, -250)
+		#velocity.x = SPEED # * damaged_multiplier
+		#velocity.y = -300.0
+		hp -= 1
+		hp_updated.emit(hp)
+		if hp == 1 and !hair_out:
+			hair_out = true
+			$FullBodyAnim.hide()
+			$HairOpenAnim.show()
+			call_deferred("throw_bandana")
+		full_body_anim.get_material().set_shader_parameter("active", true)
+		set_collision_mask(CollisionCalc.mask([3,5,6]))
+		is_attacking = false
+		sync_change_anim("hurt")
+		$DamagedIframeDuration.start()
+		$KnockbackRecoverOnLanding.start()
+		if hp <= 0:
+			current_state = State.DEAD
+		#$KnockbackRecoverTimer.start()
 
 func throw_bandana():
 	var new_bandana = bandana.instantiate()

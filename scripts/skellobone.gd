@@ -143,6 +143,7 @@ func trigger_death(is_player_facing_right):
 	change_anim("hurt")
 	set_collision_mask(0)
 	set_collision_layer(0)
+	staffhitbox_enabled(false)
 	
 	var angle_radians = deg_to_rad(parabolic_stat.angle_degrees)
 	var d : int = 1 if is_player_facing_right else -1
@@ -172,7 +173,7 @@ func staffhitbox_enabled(is_enabled : bool):
 	staff_hitbox.set_monitoring(is_enabled)
 
 func _on_anim_frame_change():
-	if anim.animation == "attack":
+	if anim.animation == "attack" and State.ATTACKING:
 		match (anim.frame):
 			3:
 				staffhitbox_enabled(true)

@@ -93,8 +93,9 @@ texture = ExtResource("4_cvqhi")
 centered = false
 
 [node name="PortraitPoppyGeneral" type="Sprite2D" parent="CanvasLayer/Control/Node2D"]
-position = Vector2(45, 71)
+position = Vector2(-32, 0)
 texture = ExtResource("4_tenvt")
+centered = false
 
 [node name="PortraitPoppyGeneral2" type="Sprite2D" parent="CanvasLayer/Control/Node2D"]
 visible = false

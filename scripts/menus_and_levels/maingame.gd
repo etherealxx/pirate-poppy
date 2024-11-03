@@ -8,7 +8,7 @@ extends Node2D
 
 var score := 0
 var round_duration := 60
-
+var shield
 func _ready() -> void:
 	Engine.set_time_scale(1.0)
 	if auto_full_screen:

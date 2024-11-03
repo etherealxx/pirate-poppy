@@ -1,9 +1,10 @@
-[gd_scene load_steps=78 format=3 uid="uid://ddmehvvff8lxn"]
+[gd_scene load_steps=81 format=3 uid="uid://ddmehvvff8lxn"]
 
 [ext_resource type="Script" path="res://scripts/poppy.gd" id="1_7yo6t"]
 [ext_resource type="Shader" path="res://shaders/hitflash.gdshader" id="1_pl5c1"]
 [ext_resource type="Texture2D" uid="uid://cimlt0c3o3uee" path="res://assets/gamesprites/player_poppy/bandana/poppy 3 attack.png" id="2_qboue"]
 [ext_resource type="Texture2D" uid="uid://d3res8hgtpsbn" path="res://assets/gamesprites/player_poppy/bandana/poppy 3 fall.png" id="3_xrk3w"]
+[ext_resource type="Texture2D" uid="uid://c47qntnnyqugs" path="res://assets/gamesprites/player_poppy/bandana/poppy 3 block.png" id="4_buqjr"]
 [ext_resource type="Texture2D" uid="uid://dct7nctmvs0cj" path="res://assets/gamesprites/player_poppy/bandana/poppy 3 idle.png" id="4_utyeu"]
 [ext_resource type="Texture2D" uid="uid://ceyhhfyvjf1cw" path="res://assets/gamesprites/player_poppy/bandana/poppy 3 jump.png" id="5_7kna2"]
 [ext_resource type="Texture2D" uid="uid://de8uke6yosavq" path="res://assets/gamesprites/player_poppy/bandana/poppy_hurt.png" id="5_b36uy"]
@@ -13,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://xo7vdpll4k3k" path="res://assets/gamesprites/player_poppy/hair/poppy 3 hair attack.png" id="10_ov2js"]
 [ext_resource type="Texture2D" uid="uid://yolvcuts1wfu" path="res://assets/gamesprites/player_poppy/hair/poppy 3 hair fall.png" id="11_0800g"]
 [ext_resource type="Texture2D" uid="uid://c4urbnpv3yx4a" path="res://assets/gamesprites/player_poppy/hair/poppy_hurt_no_bandana.png" id="12_3vipy"]
+[ext_resource type="Texture2D" uid="uid://diuy3a2wpnerb" path="res://assets/gamesprites/player_poppy/hair/poppy 3 hair block.png" id="13_gaanc"]
 [ext_resource type="Texture2D" uid="uid://dlmj527tlldg4" path="res://assets/gamesprites/player_poppy/hair/poppy 3 hair idle.png" id="13_vjah0"]
 [ext_resource type="Texture2D" uid="uid://c17vitfvnsgd" path="res://assets/gamesprites/player_poppy/hair/poppy 3 hair jump.png" id="14_52fsm"]
 [ext_resource type="Texture2D" uid="uid://vi22g8s7jtky" path="res://assets/gamesprites/player_poppy/hair/poppy 3 hair run.png" id="15_wyc7i"]
@@ -156,6 +158,14 @@ animations = [{
 "loop": false,
 "name": &"attack",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_buqjr")
+}],
+"loop": true,
+"name": &"block",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -388,6 +398,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("13_gaanc")
+}],
+"loop": true,
+"name": &"block",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_snn6c")
 }, {
 "duration": 1.0,
@@ -491,6 +509,9 @@ height = 28.0
 radius = 7.0
 height = 32.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sb8em"]
+height = 32.0
+
 [sub_resource type="LabelSettings" id="LabelSettings_cy1ri"]
 font = ExtResource("16_te4cq")
 font_size = 14
@@ -504,7 +525,7 @@ can_attack_while_iframe = true
 [node name="FullBodyAnim" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_16p87")
 sprite_frames = SubResource("SpriteFrames_ew31k")
-animation = &"idle"
+animation = &"block"
 autoplay = "idle"
 
 [node name="HairOpenAnim" type="AnimatedSprite2D" parent="."]
@@ -554,6 +575,16 @@ position = Vector2(0, 8)
 shape = SubResource("CapsuleShape2D_cby2o")
 debug_color = Color(0.255413, 0.622195, 0.366841, 0.42)
 
+[node name="PoppyWallDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 40
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PoppyWallDetector"]
+position = Vector2(0, 8)
+shape = SubResource("CapsuleShape2D_sb8em")
+debug_color = Color(0.829786, 0.351708, 0.470272, 0.42)
+
 [node name="DebugState" type="Label" parent="."]
 visible = false
 anchors_preset = 8
@@ -571,8 +602,31 @@ text = "0"
 label_settings = SubResource("LabelSettings_cy1ri")
 horizontal_alignment = 1
 
+[node name="DebugFuel" type="Label" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -19.0
+offset_top = -27.0
+offset_right = 21.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "0"
+label_settings = SubResource("LabelSettings_cy1ri")
+horizontal_alignment = 1
+
+[node name="ShieldKnockDuration" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.5
+one_shot = true
+
 [connection signal="timeout" from="PositionUpdate" to="." method="_on_position_update_timeout"]
 [connection signal="body_entered" from="SwordHitbox" to="." method="_on_sword_hitbox_body_entered"]
 [connection signal="timeout" from="DamagedIframeDuration" to="." method="_on_damaged_iframe_timeout"]
 [connection signal="timeout" from="KnockbackRecoverOnLanding" to="." method="_on_knockback_recover_on_landing_timeout"]
 [connection signal="body_entered" from="ItemCollector" to="." method="_on_item_collector_body_entered"]
+[connection signal="body_entered" from="PoppyWallDetector" to="." method="_on_item_collector_body_entered"]

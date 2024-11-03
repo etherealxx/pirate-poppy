@@ -12,4 +12,5 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _on_despawn_timeout() -> void:
-	queue_free()
+	#queue_free()
+	pass
