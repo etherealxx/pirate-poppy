@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://dr0d37tmwsyaq"]
+
+[ext_resource type="Texture2D" uid="uid://di3dme11q1hkg" path="res://assets/gamesprites/enemies/ambaskele/bullet.png" id="1_q71fj"]
+[ext_resource type="Script" path="res://scripts/bullet.gd" id="1_v0hnq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_55qbp"]
+radius = 3.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nfpgr"]
+radius = 5.0
+
+[node name="Bullet" type="CharacterBody2D"]
+z_index = 1
+texture_filter = 1
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_v0hnq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_q71fj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_55qbp")
+
+[node name="PlayerDetector" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector"]
+shape = SubResource("CircleShape2D_nfpgr")
+debug_color = Color(0.281437, 0.610619, 0.458636, 0.42)
+
+[connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]

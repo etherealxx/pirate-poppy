@@ -16,6 +16,7 @@ func _on_fade_finished():
 	if next_input == "main_menu":
 		get_tree().change_scene_to_file(main_menu_scene)
 	elif next_input == "restart":
+		GlobalVar.phase_two = false
 		get_tree().change_scene_to_file(main_gameplay_scene)
 		
 func _unhandled_input(_event: InputEvent) -> void:

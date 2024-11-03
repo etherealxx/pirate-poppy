@@ -1,4 +1,4 @@
-[gd_scene load_steps=125 format=3 uid="uid://cq2k5bbqyxcxg"]
+[gd_scene load_steps=156 format=3 uid="uid://cq2k5bbqyxcxg"]
 
 [ext_resource type="Material" uid="uid://p5htxu1bwg6u" path="res://resources/gameboy_shadermat.tres" id="1_cf8b2"]
 [ext_resource type="Script" path="res://scripts/menus_and_levels/cutscene_boss.gd" id="2_t2qc5"]
@@ -7,6 +7,7 @@
 [ext_resource type="FontFile" uid="uid://ckxl5eiumbsa2" path="res://fonts/NotJamOldStyle11/NotJamOldStyle14.ttf" id="6_ysp3t"]
 [ext_resource type="Texture2D" uid="uid://bjl43eegiqj1x" path="res://assets/gamesprites/UI/skull.png" id="7_8q7n4"]
 [ext_resource type="Texture2D" uid="uid://slhagiq63q30" path="res://assets/gamesprites/UI/cross.png" id="8_ijbxu"]
+[ext_resource type="Script" path="res://scripts/black_fade_game.gd" id="9_klnq1"]
 [ext_resource type="Texture2D" uid="uid://dqbmvcc3yinjh" path="res://assets/references/download (3).png" id="10_omvg6"]
 [ext_resource type="Texture2D" uid="uid://cq0t6q5t1apoy" path="res://assets/gamesprites/backgrounds/sea.png" id="11_a6u0p"]
 [ext_resource type="Texture2D" uid="uid://cee352accro4x" path="res://assets/gamesprites/backgrounds/clouds2.png" id="12_ulm32"]
@@ -18,14 +19,17 @@
 [ext_resource type="Texture2D" uid="uid://clihkhevhhxrn" path="res://assets/gamesprites/backgrounds/objects/barrel out.png" id="15_qa534"]
 [ext_resource type="Texture2D" uid="uid://bo8aunokxyek7" path="res://assets/gamesprites/shadow.png" id="16_omhtd"]
 [ext_resource type="Texture2D" uid="uid://mn3d38lu2yw1" path="res://assets/gamesprites/backgrounds/objects/barrel surprise loop.png" id="16_xb6t5"]
-[ext_resource type="Script" path="res://scripts/player_shadow.gd" id="17_8o25k"]
 [ext_resource type="Texture2D" uid="uid://d1ibhrk4v63yt" path="res://assets/gamesprites/backgrounds/objects/barrel surprise.png" id="17_ntupv"]
 [ext_resource type="Shader" path="res://shaders/hitflash.gdshader" id="18_3ic81"]
+[ext_resource type="Texture2D" uid="uid://j2hbfaretnow" path="res://assets/gamesprites/backgrounds/objects/barrel_front.png" id="19_bcd4o"]
+[ext_resource type="Texture2D" uid="uid://74ke1gwuunbn" path="res://assets/gamesprites/enemies/ambaskele/Boss_Ambaskele_Attack_Meele-Sheet.png" id="19_pt7u8"]
 [ext_resource type="Texture2D" uid="uid://cimlt0c3o3uee" path="res://assets/gamesprites/player_poppy/bandana/poppy 3 attack.png" id="19_vobf1"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="20_c357b"]
 [ext_resource type="Texture2D" uid="uid://c47qntnnyqugs" path="res://assets/gamesprites/player_poppy/bandana/poppy 3 block.png" id="20_nh3w1"]
+[ext_resource type="Texture2D" uid="uid://bjd318k7pju3f" path="res://assets/gamesprites/enemies/ambaskele/Boss_Ambaskele_Idle-Sheet.png" id="20_vchbc"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="21_2omud"]
 [ext_resource type="Texture2D" uid="uid://d3res8hgtpsbn" path="res://assets/gamesprites/player_poppy/bandana/poppy 3 fall.png" id="21_6hgja"]
+[ext_resource type="Texture2D" uid="uid://4r7ppehmgwc1" path="res://assets/gamesprites/enemies/ambaskele/Boss_Ambaskele_Attack_Range-Sheet.png" id="21_pm3tg"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="22_gmpx3"]
 [ext_resource type="Texture2D" uid="uid://de8uke6yosavq" path="res://assets/gamesprites/player_poppy/bandana/poppy_hurt.png" id="22_su4vs"]
 [ext_resource type="Texture2D" uid="uid://dct7nctmvs0cj" path="res://assets/gamesprites/player_poppy/bandana/poppy 3 idle.png" id="23_xju0n"]
@@ -41,6 +45,8 @@
 [ext_resource type="Texture2D" uid="uid://c17vitfvnsgd" path="res://assets/gamesprites/player_poppy/hair/poppy 3 hair jump.png" id="33_liqm3"]
 [ext_resource type="Texture2D" uid="uid://vi22g8s7jtky" path="res://assets/gamesprites/player_poppy/hair/poppy 3 hair run.png" id="34_b77q8"]
 [ext_resource type="FontFile" uid="uid://chy5hrohwpfuq" path="res://fonts/NotJamSlabSerif11/NotJamSlab14.ttf" id="38_7ryck"]
+[ext_resource type="Texture2D" uid="uid://4cr75l2mhs2m" path="res://assets/gamesprites/enemies/ambaskele/Boss_Ambaskele_Walk-Sheet.png" id="40_wmg2w"]
+[ext_resource type="Texture2D" uid="uid://cyvldx4s2kdbh" path="res://assets/gamesprites/backgrounds/deck2-foreground4a.png" id="42_endo6"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_pxupq"]
 font = ExtResource("6_ysp3t")
@@ -130,7 +136,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_kggar")
 }],
-"loop": true,
+"loop": false,
 "name": &"barrel_in",
 "speed": 5.0
 }, {
@@ -672,23 +678,261 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_11kp1"]
-size = Vector2(373, 7)
+[sub_resource type="Animation" id="Animation_b2j4t"]
+resource_name = "boss_entrance"
+length = 40.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Ambaskele2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3.03333, 4, 5.4, 7, 9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(457, 49), Vector2(388, 49), Vector2(388, 49), Vector2(344.745, 46.191), Vector2(329, 63), Vector2(306, 63)]
+}
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_htdet"]
-size = Vector2(80, 6)
+[sub_resource type="Animation" id="Animation_6cjf7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Ambaskele2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0awgt"]
-size = Vector2(6, 106)
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4epv3"]
+_data = {
+"RESET": SubResource("Animation_6cjf7"),
+"boss_entrance": SubResource("Animation_b2j4t")
+}
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kfbxd"]
-size = Vector2(19.5, 32.1875)
+[sub_resource type="AtlasTexture" id="AtlasTexture_1xd4d"]
+atlas = ExtResource("19_pt7u8")
+region = Rect2(0, 0, 90, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3r4eq"]
+atlas = ExtResource("19_pt7u8")
+region = Rect2(90, 0, 90, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i3teh"]
+atlas = ExtResource("19_pt7u8")
+region = Rect2(180, 0, 90, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ayru"]
+atlas = ExtResource("19_pt7u8")
+region = Rect2(270, 0, 90, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_86la3"]
+atlas = ExtResource("19_pt7u8")
+region = Rect2(360, 0, 90, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fdpss"]
+atlas = ExtResource("19_pt7u8")
+region = Rect2(450, 0, 90, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yqtv6"]
+atlas = ExtResource("20_vchbc")
+region = Rect2(0, 0, 90, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tcwid"]
+atlas = ExtResource("20_vchbc")
+region = Rect2(90, 0, 90, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m7fy0"]
+atlas = ExtResource("20_vchbc")
+region = Rect2(180, 0, 90, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e8lyq"]
+atlas = ExtResource("20_vchbc")
+region = Rect2(270, 0, 90, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eaxkf"]
+atlas = ExtResource("20_vchbc")
+region = Rect2(360, 0, 90, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_twdwk"]
+atlas = ExtResource("20_vchbc")
+region = Rect2(450, 0, 90, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7x3y3"]
+atlas = ExtResource("40_wmg2w")
+region = Rect2(0, 0, 90, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_snd7t"]
+atlas = ExtResource("40_wmg2w")
+region = Rect2(90, 0, 90, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dlb4u"]
+atlas = ExtResource("40_wmg2w")
+region = Rect2(180, 0, 90, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lfkht"]
+atlas = ExtResource("40_wmg2w")
+region = Rect2(270, 0, 90, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_br2ie"]
+atlas = ExtResource("40_wmg2w")
+region = Rect2(360, 0, 90, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cpx3w"]
+atlas = ExtResource("40_wmg2w")
+region = Rect2(450, 0, 90, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tbvmu"]
+atlas = ExtResource("21_pm3tg")
+region = Rect2(0, 0, 95, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pnc0j"]
+atlas = ExtResource("21_pm3tg")
+region = Rect2(95, 0, 95, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fb8ix"]
+atlas = ExtResource("21_pm3tg")
+region = Rect2(190, 0, 95, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ris7w"]
+atlas = ExtResource("21_pm3tg")
+region = Rect2(285, 0, 95, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pi5bp"]
+atlas = ExtResource("21_pm3tg")
+region = Rect2(380, 0, 95, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f74n8"]
+atlas = ExtResource("21_pm3tg")
+region = Rect2(475, 0, 95, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qesmw"]
+atlas = ExtResource("21_pm3tg")
+region = Rect2(570, 0, 95, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7g80j"]
+atlas = ExtResource("21_pm3tg")
+region = Rect2(665, 0, 95, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bwmpv"]
+atlas = ExtResource("21_pm3tg")
+region = Rect2(760, 0, 95, 60)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vqn25"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1xd4d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3r4eq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i3teh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ayru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_86la3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fdpss")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yqtv6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tcwid")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m7fy0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e8lyq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eaxkf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_twdwk")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7x3y3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_snd7t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dlb4u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lfkht")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_br2ie")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cpx3w")
+}],
+"loop": true,
+"name": &"move",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tbvmu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pnc0j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fb8ix")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ris7w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pi5bp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f74n8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qesmw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7g80j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bwmpv")
+}],
+"loop": false,
+"name": &"shoot",
+"speed": 7.0
+}]
 
 [sub_resource type="LabelSettings" id="LabelSettings_4t2wl"]
 font = ExtResource("38_7ryck")
 font_size = 14
 
-[sub_resource type="Resource" id="Resource_co2ol"]
+[sub_resource type="Resource" id="Resource_gdmsq"]
 script = ExtResource("22_gmpx3")
 duration = 1.0
 transition = 0
@@ -697,18 +941,11 @@ ease = 2
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nb1xq"]
 size = Vector2(499, 144)
 
-[sub_resource type="Animation" id="Animation_7xxqu"]
-length = 0.001
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_q7yq7"]
-_data = {
-"RESET": SubResource("Animation_7xxqu")
-}
-
 [node name="BossCutscene" type="Node2D"]
 texture_filter = 1
 material = ExtResource("1_cf8b2")
 script = ExtResource("2_t2qc5")
+main_gameplay_scene = "res://scenes/menus_and_levels/maingame.tscn"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -877,6 +1114,19 @@ label_settings = SubResource("LabelSettings_hr2bt")
 horizontal_alignment = 2
 vertical_alignment = 1
 
+[node name="BlackFadeGame" type="ColorRect" parent="CanvasLayer/UI"]
+unique_name_in_owner = true
+process_mode = 2
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("9_klnq1")
+
 [node name="Sprites" type="Node2D" parent="."]
 metadata/_edit_lock_ = true
 
@@ -944,18 +1194,17 @@ texture = ExtResource("14_blyld")
 unique_name_in_owner = true
 position = Vector2(347, 63)
 sprite_frames = SubResource("SpriteFrames_8uf0q")
+animation = &"barrel_out"
+autoplay = "default"
+
+[node name="BarrelFront" type="Sprite2D" parent="Sprites/Backgrounds/Objects"]
+position = Vector2(347, 63)
+texture = ExtResource("19_bcd4o")
 
 [node name="DeckForeground" type="Sprite2D" parent="Sprites/Backgrounds"]
-z_index = 1
 position = Vector2(-57, 0)
 texture = ExtResource("15_5ae4g")
 centered = false
-
-[node name="Shadow" type="Sprite2D" parent="Sprites" node_paths=PackedStringArray("player")]
-position = Vector2(123, 93)
-texture = ExtResource("16_omhtd")
-script = ExtResource("17_8o25k")
-player = NodePath("")
 
 [node name="PoppyAnimOnly" type="Node2D" parent="Sprites"]
 position = Vector2(268, 70)
@@ -973,70 +1222,34 @@ sprite_frames = SubResource("SpriteFrames_dumo7")
 animation = &"idle"
 autoplay = "idle"
 
-[node name="Grounds" type="Node2D" parent="Sprites"]
+[node name="DeckForeground2" type="Sprite2D" parent="."]
 z_index = 1
+position = Vector2(-57, 0)
+texture = ExtResource("42_endo6")
+centered = false
 
-[node name="Ground" type="StaticBody2D" parent="Sprites/Grounds"]
-position = Vector2(0, 94)
-collision_layer = 4
-collision_mask = 0
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_4epv3")
+}
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Grounds/Ground"]
-position = Vector2(186.5, 3.5)
-shape = SubResource("RectangleShape2D_11kp1")
+[node name="Ambaskele2" type="Node2D" parent="."]
+metadata/_edit_group_ = true
 
-[node name="Ground2" type="StaticBody2D" parent="Sprites/Grounds"]
-position = Vector2(0, 94)
-collision_layer = 4
-collision_mask = 0
+[node name="Ambaskele" type="AnimatedSprite2D" parent="Ambaskele2"]
+sprite_frames = SubResource("SpriteFrames_vqn25")
+animation = &"attack"
+autoplay = "move"
+frame = 5
+frame_progress = 1.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Grounds/Ground2"]
-position = Vector2(-17, -44)
-shape = SubResource("RectangleShape2D_htdet")
-
-[node name="Ground3" type="StaticBody2D" parent="Sprites/Grounds"]
-position = Vector2(0, 94)
-collision_layer = 4
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Grounds/Ground3"]
-position = Vector2(412, -13)
-shape = SubResource("RectangleShape2D_htdet")
-
-[node name="Walls" type="Node2D" parent="Sprites"]
-z_index = 1
-
-[node name="PoppyWall" type="StaticBody2D" parent="Sprites/Walls" groups=["poppy_wall"]]
-position = Vector2(0, 106)
-collision_layer = 32
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Walls/PoppyWall"]
-position = Vector2(38, -53)
-shape = SubResource("RectangleShape2D_0awgt")
-debug_color = Color(0.372224, 0.610655, 0.212997, 0.42)
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Sprites/Walls/PoppyWall"]
-position = Vector2(374, -53)
-shape = SubResource("RectangleShape2D_0awgt")
-debug_color = Color(0.372549, 0.611765, 0.211765, 0.419608)
-
-[node name="Wall2" type="StaticBody2D" parent="Sprites/Walls"]
-position = Vector2(0, 106)
-collision_layer = 8
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Walls/Wall2"]
-position = Vector2(13, -31.8125)
-shape = SubResource("RectangleShape2D_kfbxd")
-debug_color = Color(0, 0.6, 0.701961, 0.419608)
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Sprites/Walls/Wall2"]
-position = Vector2(382, -11)
-shape = SubResource("RectangleShape2D_kfbxd")
-debug_color = Color(0, 0.6, 0.701961, 0.419608)
+[node name="Shadow2" type="Sprite2D" parent="Ambaskele2/Ambaskele"]
+show_behind_parent = true
+position = Vector2(8, 29)
+texture = ExtResource("16_omhtd")
 
 [node name="DebugSeconds" type="Label" parent="."]
+visible = false
 offset_left = 330.0
 offset_top = 21.0
 offset_right = 370.0
@@ -1045,7 +1258,6 @@ text = "000"
 label_settings = SubResource("LabelSettings_4t2wl")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-physics_interpolation_mode = 1
 position = Vector2(331, 72)
 process_callback = 0
 
@@ -1054,13 +1266,11 @@ process_priority = 300
 process_physics_priority = 300
 script = ExtResource("20_c357b")
 
-[node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
+[node name="PhantomCamera2D" type="Node2D" parent="."]
 position = Vector2(331, 72)
 script = ExtResource("21_2omud")
-follow_target = NodePath("")
-tween_resource = SubResource("Resource_co2ol")
+tween_resource = SubResource("Resource_gdmsq")
 tween_on_load = false
-dead_zone_width = 0.2
 draw_limits = true
 
 [node name="PhantomCameraLimit" type="CollisionShape2D" parent="."]
@@ -1071,11 +1281,5 @@ shape = SubResource("RectangleShape2D_nb1xq")
 [node name="SecondTimer" type="Timer" parent="."]
 process_callback = 0
 autostart = true
-
-[node name="CutsceneAnimation" type="AnimationPlayer" parent="."]
-root_node = NodePath("../Sprites")
-libraries = {
-"": SubResource("AnimationLibrary_q7yq7")
-}
 
 [connection signal="timeout" from="SecondTimer" to="." method="_on_second_timer_timeout"]

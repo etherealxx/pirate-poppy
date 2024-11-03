@@ -95,6 +95,7 @@ func _physics_process(delta: float) -> void:
 			if is_on_floor() and land_to_move:
 				land_to_move = false
 				current_state = State.MOVABLE
+				swordhitbox_enabled(false)
 				velocity.x = 0.0
 		State.BLOCKING:
 			if Input.is_action_pressed("action2") and block_fuel > 0:
@@ -104,9 +105,9 @@ func _physics_process(delta: float) -> void:
 					velocity.x = move_toward(velocity.x, 0, 1) # slowing speed
 				else: velocity.x = move_toward(velocity.x, 0, SPEED)
 			else:
-				sync_change_anim("idle")
+				sync_change_anim("shield_drop")
 				is_attacking = false
-				current_state = State.MOVABLE
+				swordhitbox_enabled(false)
 		State.MOVABLE:
 			if is_on_floor():
 				if Input.is_action_just_pressed("action"):
@@ -136,7 +137,8 @@ func _physics_process(delta: float) -> void:
 					handle_run_anim(direction, velocity.y)
 				else:
 					handle_jump_anim(velocity.y)
-					if is_on_floor(): sync_change_anim("idle")
+					if is_on_floor() and full_body_anim.get_animation() != "shield_drop":
+						sync_change_anim("idle")
 					velocity.x = move_toward(velocity.x, 0, SPEED)
 			else:
 				if do_dash:
@@ -158,6 +160,8 @@ func _on_fullbody_animation_finished():
 		is_attacking = false
 		velocity.x = 0.0
 		swordhitbox_enabled(false)
+	elif full_body_anim.animation == "shield_drop" and current_state != State.DAMAGED:
+		current_state = State.MOVABLE
 
 func _on_fullbody_anim_framechange():
 	if full_body_anim.animation == "attack":
@@ -223,7 +227,10 @@ func take_damage(is_enemy_facing_right : bool):
 func throw_bandana():
 	var new_bandana = bandana.instantiate()
 	new_bandana.position = position
-	add_sibling(new_bandana)
+	#add_sibling(new_bandana)
+	var index = get_index()
+	get_parent().add_child(new_bandana)
+	get_parent().move_child(new_bandana, index)
 	var angle_radians = deg_to_rad(new_bandana.parabolic_stat.angle_degrees)
 	var d : int = 1 if full_body_anim.flip_h else -1
 	new_bandana.velocity.x = d * new_bandana.parabolic_stat.initial_velocity * cos(angle_radians)
@@ -245,3 +252,11 @@ func _on_item_collector_body_entered(body: Node2D) -> void:
 		if hp > 0 and hp < 3:
 			hp += 1
 			hp_updated.emit(hp)
+
+func _on_stuck_checker_timeout() -> void:
+	if !full_body_anim.is_playing() and full_body_anim.animation == "attack" \
+	and full_body_anim.frame == 5:
+		is_attacking = false
+		velocity.x = 0.0
+		swordhitbox_enabled(false)
+		

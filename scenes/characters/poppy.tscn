@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=3 uid="uid://ddmehvvff8lxn"]
+[gd_scene load_steps=87 format=3 uid="uid://ddmehvvff8lxn"]
 
 [ext_resource type="Script" path="res://scripts/poppy.gd" id="1_7yo6t"]
 [ext_resource type="Shader" path="res://shaders/hitflash.gdshader" id="1_pl5c1"]
@@ -14,11 +14,13 @@
 [ext_resource type="Texture2D" uid="uid://xo7vdpll4k3k" path="res://assets/gamesprites/player_poppy/hair/poppy 3 hair attack.png" id="10_ov2js"]
 [ext_resource type="Texture2D" uid="uid://yolvcuts1wfu" path="res://assets/gamesprites/player_poppy/hair/poppy 3 hair fall.png" id="11_0800g"]
 [ext_resource type="Texture2D" uid="uid://c4urbnpv3yx4a" path="res://assets/gamesprites/player_poppy/hair/poppy_hurt_no_bandana.png" id="12_3vipy"]
+[ext_resource type="Texture2D" uid="uid://cqeejbdl1v6gi" path="res://assets/gamesprites/player_poppy/bandana/poppy_3_shield_jatoh.png" id="12_a7s38"]
 [ext_resource type="Texture2D" uid="uid://diuy3a2wpnerb" path="res://assets/gamesprites/player_poppy/hair/poppy 3 hair block.png" id="13_gaanc"]
 [ext_resource type="Texture2D" uid="uid://dlmj527tlldg4" path="res://assets/gamesprites/player_poppy/hair/poppy 3 hair idle.png" id="13_vjah0"]
 [ext_resource type="Texture2D" uid="uid://c17vitfvnsgd" path="res://assets/gamesprites/player_poppy/hair/poppy 3 hair jump.png" id="14_52fsm"]
 [ext_resource type="Texture2D" uid="uid://vi22g8s7jtky" path="res://assets/gamesprites/player_poppy/hair/poppy 3 hair run.png" id="15_wyc7i"]
 [ext_resource type="FontFile" uid="uid://ckxl5eiumbsa2" path="res://fonts/NotJamOldStyle11/NotJamOldStyle14.ttf" id="16_te4cq"]
+[ext_resource type="Texture2D" uid="uid://1jn2jnr85sx1" path="res://assets/gamesprites/player_poppy/hair/poppy_3_shield_jatoh_no_bandana.png" id="20_fy4ic"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_16p87"]
 shader = ExtResource("1_pl5c1")
@@ -133,6 +135,14 @@ region = Rect2(384, 0, 48, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_vpffj"]
 atlas = ExtResource("7_j5uhn")
 region = Rect2(432, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b04pk"]
+atlas = ExtResource("12_a7s38")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfpsy"]
+atlas = ExtResource("12_a7s38")
+region = Rect2(96, 0, 48, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ew31k"]
 animations = [{
@@ -265,6 +275,17 @@ animations = [{
 "loop": true,
 "name": &"run",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b04pk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfpsy")
+}],
+"loop": false,
+"name": &"shield_drop",
+"speed": 5.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y4cwt"]
@@ -370,6 +391,14 @@ region = Rect2(384, 0, 48, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_6ppag"]
 atlas = ExtResource("15_wyc7i")
 region = Rect2(432, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1btns"]
+atlas = ExtResource("20_fy4ic")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g85a5"]
+atlas = ExtResource("20_fy4ic")
+region = Rect2(96, 0, 48, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_lx2e2"]
 animations = [{
@@ -496,6 +525,17 @@ animations = [{
 "loop": true,
 "name": &"run",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1btns")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g85a5")
+}],
+"loop": false,
+"name": &"shield_drop",
+"speed": 5.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bvuda"]
@@ -525,7 +565,7 @@ can_attack_while_iframe = true
 [node name="FullBodyAnim" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_16p87")
 sprite_frames = SubResource("SpriteFrames_ew31k")
-animation = &"block"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="HairOpenAnim" type="AnimatedSprite2D" parent="."]
@@ -624,9 +664,15 @@ process_callback = 0
 wait_time = 0.5
 one_shot = true
 
+[node name="StuckChecker" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.2
+autostart = true
+
 [connection signal="timeout" from="PositionUpdate" to="." method="_on_position_update_timeout"]
 [connection signal="body_entered" from="SwordHitbox" to="." method="_on_sword_hitbox_body_entered"]
 [connection signal="timeout" from="DamagedIframeDuration" to="." method="_on_damaged_iframe_timeout"]
 [connection signal="timeout" from="KnockbackRecoverOnLanding" to="." method="_on_knockback_recover_on_landing_timeout"]
 [connection signal="body_entered" from="ItemCollector" to="." method="_on_item_collector_body_entered"]
 [connection signal="body_entered" from="PoppyWallDetector" to="." method="_on_item_collector_body_entered"]
+[connection signal="timeout" from="StuckChecker" to="." method="_on_stuck_checker_timeout"]

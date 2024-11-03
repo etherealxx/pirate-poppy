@@ -2,8 +2,9 @@ extends Node
 
 var character_pos := Vector2.ZERO
 var player_hp := 3
+var phase_two := false
 
-func _unhandled_input(event: InputEvent) -> void:
+func _unhandled_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("toggle_fullscreen_button"):
 		var window = get_tree().get_root()
 		match window.get_mode():

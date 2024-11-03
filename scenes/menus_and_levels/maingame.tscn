@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://dmg68j8m5x5ye"]
+[gd_scene load_steps=34 format=3 uid="uid://dmg68j8m5x5ye"]
 
 [ext_resource type="Material" uid="uid://p5htxu1bwg6u" path="res://resources/gameboy_shadermat.tres" id="1_wbfoc"]
 [ext_resource type="Script" path="res://scripts/menus_and_levels/maingame.gd" id="2_f0ex1"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://bo8aunokxyek7" path="res://assets/gamesprites/shadow.png" id="8_knos6"]
 [ext_resource type="Script" path="res://scripts/player_shadow.gd" id="9_oe4ho"]
 [ext_resource type="Script" path="res://scripts/black_fade_game.gd" id="9_u4yud"]
+[ext_resource type="Script" path="res://scripts/white_fade_game.gd" id="10_74qjo"]
 [ext_resource type="PackedScene" uid="uid://ddmehvvff8lxn" path="res://scenes/characters/poppy.tscn" id="11_u8dcy"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="11_y7msq"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="12_5nu0o"]
@@ -23,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://bfd8f1gnsl2al" path="res://assets/gamesprites/backgrounds/objects/barrel.png" id="15_jkp3s"]
 [ext_resource type="PackedScene" uid="uid://bpm7aqcxgaoxb" path="res://scenes/enemy_spawner.tscn" id="18_dbdff"]
 [ext_resource type="PackedScene" uid="uid://dxj5yt1cob3oi" path="res://scenes/characters/skellobone_staff.tscn" id="19_ba7dj"]
+[ext_resource type="Texture2D" uid="uid://cyvldx4s2kdbh" path="res://assets/gamesprites/backgrounds/deck2-foreground4a.png" id="20_fbqu8"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_pxupq"]
 font = ExtResource("7_8ek5r")
@@ -63,6 +65,7 @@ player = NodePath("Sprites/Poppy")
 every_enemies = Array[PackedScene]([ExtResource("19_ba7dj")])
 game_over_scene = "res://scenes/menus_and_levels/game_over.tscn"
 ending_scene = "res://scenes/menus_and_levels/ending_screen.tscn"
+cutscene_scene = "res://scenes/menus_and_levels/cutscene_boss.tscn"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -118,6 +121,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Clock" type="TextureRect" parent="CanvasLayer/UI/UIBlackBorder"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -225,6 +229,21 @@ label_settings = SubResource("LabelSettings_hr2bt")
 horizontal_alignment = 2
 vertical_alignment = 1
 
+[node name="WhiteFadeGame" type="ColorRect" parent="CanvasLayer/UI"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+script = ExtResource("10_74qjo")
+
+[node name="RampUpTimer" type="Timer" parent="CanvasLayer/UI/WhiteFadeGame"]
+process_callback = 0
+wait_time = 0.4
+
 [node name="BlackFadeGame" type="ColorRect" parent="CanvasLayer/UI"]
 unique_name_in_owner = true
 process_mode = 2
@@ -306,7 +325,6 @@ position = Vector2(347, 63)
 texture = ExtResource("15_jkp3s")
 
 [node name="DeckForeground" type="Sprite2D" parent="Sprites/Backgrounds"]
-z_index = 1
 position = Vector2(-57, 0)
 texture = ExtResource("14_ipy2l")
 centered = false
@@ -319,6 +337,12 @@ player = NodePath("../Poppy")
 
 [node name="Poppy" parent="Sprites" instance=ExtResource("11_u8dcy")]
 position = Vector2(123, 70)
+
+[node name="DeckForeground2" type="Sprite2D" parent="Sprites"]
+z_index = 1
+position = Vector2(-57, 0)
+texture = ExtResource("20_fbqu8")
+centered = false
 
 [node name="Enemies" type="Node2D" parent="Sprites"]
 unique_name_in_owner = true
@@ -460,5 +484,6 @@ autostart = true
 process_callback = 0
 autostart = true
 
+[connection signal="timeout" from="CanvasLayer/UI/WhiteFadeGame/RampUpTimer" to="CanvasLayer/UI/WhiteFadeGame" method="_on_ramp_up_timer_timeout"]
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]
 [connection signal="timeout" from="SecondTimer" to="." method="_on_second_timer_timeout"]

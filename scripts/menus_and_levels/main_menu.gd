@@ -9,6 +9,7 @@ func _ready() -> void:
 
 func _on_fade_finished():
 	await get_tree().create_timer(0.5, true, true).timeout
+	GlobalVar.phase_two = false
 	get_tree().change_scene_to_file(main_gameplay_scene)
 
 func _unhandled_input(_event: InputEvent) -> void:
