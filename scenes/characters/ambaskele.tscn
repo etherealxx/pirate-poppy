@@ -268,7 +268,7 @@ parabolic_stat = SubResource("Resource_qactr")
 [node name="Ambaskele" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_3orwj")
 sprite_frames = SubResource("SpriteFrames_6wbq6")
-animation = &"attack"
+animation = &"hurt"
 autoplay = "idle"
 
 [node name="Shadow" type="Sprite2D" parent="."]

@@ -2,12 +2,16 @@ extends Node2D
 
 @export_file("*.tscn") var main_menu_scene
 
+var ending_bandana_out = load("res://assets/gamesprites/backgrounds/ending_raft_no_bandana.png")
+
 var first_fade := false
 var next_input := ""
 
 func _ready() -> void:
 	%BlackFadeMenu.initial_fade.connect(func(): first_fade = true)
 	%BlackFadeMenu.fade_finished.connect(_on_fade_finished)
+	if GlobalVar.bandana_out:
+		%EndingShip.set_texture(ending_bandana_out)
 	%AnimationPlayer.play("ending")
 
 func _on_fade_finished():

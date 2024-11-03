@@ -45,6 +45,10 @@ func _ready() -> void:
 	$FullBodyAnim.show()
 	$HairOpenAnim.hide()
 	set_collision_mask(CollisionCalc.mask([2,3,5,6]))
+	if GlobalVar.bandana_out:
+		hair_out = true
+		$FullBodyAnim.hide()
+		$HairOpenAnim.show()
 
 func sync_change_anim(anim_name : String):
 	if !full_body_anim.get_animation() == anim_name: full_body_anim.play(anim_name)
@@ -98,16 +102,22 @@ func _physics_process(delta: float) -> void:
 				swordhitbox_enabled(false)
 				velocity.x = 0.0
 		State.BLOCKING:
-			if Input.is_action_pressed("action2") and block_fuel > 0:
-				block_fuel -= 1
-				sync_change_anim("block")
-				if $ShieldKnockDuration.time_left > 0:
-					velocity.x = move_toward(velocity.x, 0, 1) # slowing speed
-				else: velocity.x = move_toward(velocity.x, 0, SPEED)
+			if Input.is_action_pressed("action2"):
+				if block_fuel > 0:
+					block_fuel -= 1
+					sync_change_anim("block")
+					if $ShieldKnockDuration.time_left > 0:
+						velocity.x = move_toward(velocity.x, 0, 1) # slowing speed
+					else: velocity.x = move_toward(velocity.x, 0, SPEED)
+				else:
+					sync_change_anim("shield_drop")
+					is_attacking = false
+					swordhitbox_enabled(false)
+					current_state = State.MOVABLE
 			else:
-				sync_change_anim("shield_drop")
 				is_attacking = false
 				swordhitbox_enabled(false)
+				current_state = State.MOVABLE
 		State.MOVABLE:
 			if is_on_floor():
 				if Input.is_action_just_pressed("action"):
@@ -235,6 +245,7 @@ func throw_bandana():
 	var d : int = 1 if full_body_anim.flip_h else -1
 	new_bandana.velocity.x = d * new_bandana.parabolic_stat.initial_velocity * cos(angle_radians)
 	new_bandana.velocity.y = -new_bandana.parabolic_stat.initial_velocity * sin(angle_radians)
+	GlobalVar.bandana_out = true
 
 func _on_damaged_iframe_timeout() -> void:
 	is_flashing = false

@@ -105,6 +105,7 @@ func take_damage(is_player_facing_right : bool):
 	#$FlashRecover.start()
 	#is_idling = false
 	is_flashing = true
+	staffhitbox_enabled(false)
 	$IdleTimer.stop()
 	if anim.animation == "attack" and (anim.frame in [3, 4, 5]) and resist_hit:
 		pass

@@ -140,6 +140,7 @@ texture = ExtResource("4_l2tgs")
 centered = false
 
 [node name="EndingShip" type="Sprite2D" parent="CanvasLayer/Control/Node2D"]
+unique_name_in_owner = true
 texture = ExtResource("5_byn84")
 centered = false
 

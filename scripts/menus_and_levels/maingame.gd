@@ -28,6 +28,8 @@ func _ready() -> void:
 	%BlackFadeGame.initial_fade.connect(_on_enter_game_fade_finished)
 	%BlackFadeGame.fade_finished.connect(_on_exit_game_fade_finished)
 	%WhiteFadeGame.ramp_up_finished.connect(_on_final_blow_fade_finished)
+	score = GlobalVar.game_score
+	%Score.text = str(score).pad_zeros(3)
 	if debug_instant_phase_two: GlobalVar.phase_two = true
 	if GlobalVar.phase_two:
 		%Clock.set_texture(load("res://assets/gamesprites/UI/heart_boss.png"))
@@ -41,9 +43,10 @@ func _ready() -> void:
 		#$Sprites/Ambaskele.spawn_bullet.connect(_on_boss_spawn_bullet)
 
 func _on_boss_hp_update(hp):
-	if hp > 0:
+	if hp >= 0:
 		%Countdown.text = str(hp).pad_zeros(2)
 	if hp <= 0:
+		GlobalVar.game_score = score
 		%WhiteFadeGame.ramp_up()
 		Engine.set_time_scale(0.8)
 		player.set_collision_mask(CollisionCalc.mask([3,5,6]))
@@ -124,6 +127,7 @@ func _on_second_timer_timeout() -> void:
 			await get_tree().create_timer(1.0, true, true).timeout
 			#@TODO GANTI 
 			is_going_cutscene = true
+			GlobalVar.game_score = score
 			get_tree().paused = true
 			%BlackFadeGame.do_fade_out()
 

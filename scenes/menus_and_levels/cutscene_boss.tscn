@@ -1210,17 +1210,24 @@ centered = false
 position = Vector2(268, 70)
 
 [node name="FullBodyAnim" type="AnimatedSprite2D" parent="Sprites/PoppyAnimOnly"]
+unique_name_in_owner = true
 material = SubResource("ShaderMaterial_s1wtt")
 sprite_frames = SubResource("SpriteFrames_h4ldv")
 animation = &"idle"
 autoplay = "idle"
 
 [node name="HairOpenAnim" type="AnimatedSprite2D" parent="Sprites/PoppyAnimOnly"]
+unique_name_in_owner = true
 visible = false
 material = SubResource("ShaderMaterial_s1wtt")
 sprite_frames = SubResource("SpriteFrames_dumo7")
 animation = &"idle"
 autoplay = "idle"
+
+[node name="Shadow" type="Sprite2D" parent="Sprites/PoppyAnimOnly"]
+show_behind_parent = true
+position = Vector2(1, 24)
+texture = ExtResource("16_omhtd")
 
 [node name="DeckForeground2" type="Sprite2D" parent="."]
 z_index = 1

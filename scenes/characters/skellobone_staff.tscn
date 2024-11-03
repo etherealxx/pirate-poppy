@@ -1,13 +1,13 @@
-[gd_scene load_steps=37 format=3 uid="uid://dxj5yt1cob3oi"]
+[gd_scene load_steps=36 format=3 uid="uid://dxj5yt1cob3oi"]
 
 [ext_resource type="Script" path="res://scripts/skellobone.gd" id="1_26v38"]
 [ext_resource type="Texture2D" uid="uid://cqx8pmmyjnap8" path="res://assets/gamesprites/enemies/skellobone/Kroco_1-Sheet_Idle_2.png" id="1_bmoq2"]
 [ext_resource type="Shader" path="res://shaders/hitflash.gdshader" id="2_2iqwy"]
 [ext_resource type="Resource" uid="uid://bhv2tc1bskc7c" path="res://resources/skellebone_parabolic.tres" id="2_ml4a3"]
 [ext_resource type="Texture2D" uid="uid://8xm18us0uw24" path="res://assets/gamesprites/enemies/skellobone/Kroco_1-Sheet_Walk_2.png" id="3_4bngv"]
-[ext_resource type="Texture2D" uid="uid://l7vwn0ij0hlo" path="res://assets/gamesprites/enemies/skellobone/Kroco_Damage.png" id="3_7egka"]
 [ext_resource type="Texture2D" uid="uid://bx8jlo5vbpqwn" path="res://assets/gamesprites/enemies/skellobone/Kroco_1-Sheet_Attack_3.png" id="4_twvul"]
 [ext_resource type="Texture2D" uid="uid://bo8aunokxyek7" path="res://assets/gamesprites/shadow.png" id="5_hao8s"]
+[ext_resource type="Texture2D" uid="uid://dkwaysuyc8nc" path="res://assets/gamesprites/enemies/skellobone/Kroco_1_Hurt_1.png" id="5_kf6df"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_16p87"]
 shader = ExtResource("2_2iqwy")
@@ -42,10 +42,6 @@ region = Rect2(325, 0, 65, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_j6r6o"]
 atlas = ExtResource("4_twvul")
 region = Rect2(390, 0, 65, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_srxfv"]
-atlas = ExtResource("3_7egka")
-region = Rect2(0, 0, 65, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ni42y"]
 atlas = ExtResource("1_bmoq2")
@@ -136,7 +132,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_srxfv")
+"texture": ExtResource("5_kf6df")
 }],
 "loop": true,
 "name": &"hurt",
@@ -219,9 +215,8 @@ parabolic_stat = ExtResource("2_ml4a3")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_16p87")
 sprite_frames = SubResource("SpriteFrames_0qshf")
-animation = &"attack"
+animation = &"hurt"
 autoplay = "idle"
-frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 8)

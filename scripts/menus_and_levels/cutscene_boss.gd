@@ -16,6 +16,9 @@ func _ready() -> void:
 	%BlackFadeGame.show()
 	%BlackFadeGame.initial_fade.connect(_on_enter_game_fade_finished)
 	%BlackFadeGame.fade_finished.connect(_on_exit_game_fade_finished)
+	if GlobalVar.bandana_out:
+		%FullBodyAnim.hide()
+		%HairOpenAnim.show()
 
 func _on_enter_game_fade_finished():
 	get_tree().paused = false

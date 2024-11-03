@@ -3,6 +3,8 @@ extends Node
 var character_pos := Vector2.ZERO
 var player_hp := 3
 var phase_two := false
+var bandana_out := false
+var game_score := 0
 
 func _unhandled_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("toggle_fullscreen_button"):

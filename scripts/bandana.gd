@@ -9,6 +9,7 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 	else:
 		velocity.x = 0
+		if $AnimatedSprite2D.animation != "ground": $AnimatedSprite2D.play("ground")
 	move_and_slide()
 
 func _on_despawn_timeout() -> void:
