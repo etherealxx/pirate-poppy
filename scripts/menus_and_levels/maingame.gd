@@ -131,8 +131,7 @@ func _on_second_timer_timeout() -> void:
 			get_tree().paused = true
 			%BlackFadeGame.do_fade_out()
 
-
-func _unhandled_input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed("debug_reset_button"):
-		GlobalVar.phase_two = true
-		get_tree().reload_current_scene()
+#func _unhandled_input(_event: InputEvent) -> void:
+	#if Input.is_action_just_pressed("debug_reset_button"):
+		#GlobalVar.phase_two = true
+		#get_tree().reload_current_scene()
