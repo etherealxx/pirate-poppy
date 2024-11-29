@@ -1,4 +1,4 @@
-[gd_scene load_steps=156 format=3 uid="uid://cq2k5bbqyxcxg"]
+[gd_scene load_steps=157 format=3 uid="uid://cq2k5bbqyxcxg"]
 
 [ext_resource type="Material" uid="uid://p5htxu1bwg6u" path="res://resources/gameboy_shadermat.tres" id="1_cf8b2"]
 [ext_resource type="Script" path="res://scripts/menus_and_levels/cutscene_boss.gd" id="2_t2qc5"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cys551f3spd4g" path="res://assets/gamesprites/UI/clock.png" id="5_7n8uc"]
 [ext_resource type="FontFile" uid="uid://ckxl5eiumbsa2" path="res://fonts/NotJamOldStyle11/NotJamOldStyle14.ttf" id="6_ysp3t"]
 [ext_resource type="Texture2D" uid="uid://bjl43eegiqj1x" path="res://assets/gamesprites/UI/skull.png" id="7_8q7n4"]
+[ext_resource type="LabelSettings" uid="uid://cpwc7d44vabbg" path="res://resources/cutscene_hold_labelsetting.tres" id="8_72vcg"]
 [ext_resource type="Texture2D" uid="uid://slhagiq63q30" path="res://assets/gamesprites/UI/cross.png" id="8_ijbxu"]
 [ext_resource type="Script" path="res://scripts/black_fade_game.gd" id="9_klnq1"]
 [ext_resource type="Texture2D" uid="uid://dqbmvcc3yinjh" path="res://assets/references/download (3).png" id="10_omvg6"]
@@ -678,6 +679,21 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="Animation" id="Animation_6cjf7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Ambaskele2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_b2j4t"]
 resource_name = "boss_entrance"
 length = 40.0
@@ -693,21 +709,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(457, 49), Vector2(388, 49), Vector2(388, 49), Vector2(344.745, 46.191), Vector2(329, 63), Vector2(306, 63)]
-}
-
-[sub_resource type="Animation" id="Animation_6cjf7"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Ambaskele2:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4epv3"]
@@ -1114,6 +1115,22 @@ label_settings = SubResource("LabelSettings_hr2bt")
 horizontal_alignment = 2
 vertical_alignment = 1
 
+[node name="SkipCutsceneText" type="Label" parent="CanvasLayer/UI"]
+unique_name_in_owner = true
+texture_filter = 1
+custom_minimum_size = Vector2(71, 0)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 13.0
+grow_horizontal = 2
+size_flags_vertical = 3
+text = "Keep holding  J to skip cutscene..."
+label_settings = ExtResource("8_72vcg")
+horizontal_alignment = 1
+vertical_alignment = 2
+autowrap_mode = 3
+
 [node name="BlackFadeGame" type="ColorRect" parent="CanvasLayer/UI"]
 unique_name_in_owner = true
 process_mode = 2
@@ -1129,6 +1146,7 @@ script = ExtResource("9_klnq1")
 
 [node name="Sprites" type="Node2D" parent="."]
 metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
 
 [node name="Ref" type="Sprite2D" parent="Sprites"]
 visible = false

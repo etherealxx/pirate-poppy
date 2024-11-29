@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://cpwc7d44vabbg"]
+
+[ext_resource type="FontFile" uid="uid://cyl75ei7tojve" path="res://fonts/m5x7.ttf" id="1_deepf"]
+
+[resource]
+line_spacing = -2.0
+font = ExtResource("1_deepf")
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)

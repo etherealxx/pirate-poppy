@@ -3,6 +3,7 @@ extends Node2D
 @export var auto_full_screen := false
 @export var debug_instant_phase_two := false
 @export var debug_dont_spawn := false
+@export var debug_skip_phase_button := false
 @export var player : CharacterBody2D
 @export var every_enemies : Array[PackedScene]
 @export_file("*.tscn") var game_over_scene
@@ -50,6 +51,7 @@ func _on_boss_hp_update(hp):
 		%WhiteFadeGame.ramp_up()
 		Engine.set_time_scale(0.8)
 		player.set_collision_mask(CollisionCalc.mask([3,5,6]))
+		player.is_invincible = true
 	
 func _on_final_blow_fade_finished():
 	is_winning = true
@@ -131,7 +133,7 @@ func _on_second_timer_timeout() -> void:
 			get_tree().paused = true
 			%BlackFadeGame.do_fade_out()
 
-#func _unhandled_input(_event: InputEvent) -> void:
-	#if Input.is_action_just_pressed("debug_reset_button"):
-		#GlobalVar.phase_two = true
-		#get_tree().reload_current_scene()
+func _unhandled_input(_event: InputEvent) -> void:
+	if Input.is_action_just_pressed("debug_reset_button") and debug_skip_phase_button:
+		GlobalVar.phase_two = true
+		get_tree().reload_current_scene()

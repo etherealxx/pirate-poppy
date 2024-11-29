@@ -264,6 +264,7 @@ collision_layer = 2
 collision_mask = 4
 script = ExtResource("1_25pjm")
 parabolic_stat = SubResource("Resource_qactr")
+resist_hit = true
 
 [node name="Ambaskele" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_3orwj")
@@ -292,6 +293,11 @@ one_shot = true
 [node name="KnockbackRecoverTimer" type="Timer" parent="."]
 process_callback = 0
 wait_time = 0.4
+one_shot = true
+
+[node name="HitflashDurationTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.8
 one_shot = true
 
 [node name="AttackDelay" type="Timer" parent="."]
@@ -332,6 +338,7 @@ position = Vector2(43, -7)
 [connection signal="timeout" from="DirectionUpdate" to="." method="_on_direction_update_timeout"]
 [connection signal="timeout" from="IdleTimer" to="." method="_on_idle_timer_timeout"]
 [connection signal="timeout" from="KnockbackRecoverTimer" to="." method="_on_knockback_recover_timer_timeout"]
+[connection signal="timeout" from="HitflashDurationTimer" to="." method="_on_hitflash_duration_timer_timeout"]
 [connection signal="timeout" from="AttackDelay" to="." method="_on_attack_delay_timeout"]
 [connection signal="body_entered" from="StaffHitbox" to="." method="_on_staff_hitbox_body_entered"]
 [connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]

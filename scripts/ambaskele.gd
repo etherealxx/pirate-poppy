@@ -122,6 +122,7 @@ func take_damage(is_player_facing_right : bool):
 		return
 	anim.get_material().set_shader_parameter("active", true)
 	$KnockbackRecoverTimer.start()
+	$HitflashDurationTimer.start()
 
 func trigger_death(is_player_facing_right):
 
@@ -152,10 +153,13 @@ func spawn_heart():
 
 func _on_knockback_recover_timer_timeout() -> void:
 	if is_flashing:
+		current_state = State.MOVING
+		$IdleTimer.start(randf_range(0.2, 1.0))
+
+func _on_hitflash_duration_timer_timeout() -> void:
+	if is_flashing:
 		is_flashing = false
 		anim.get_material().set_shader_parameter("active", false)
-		current_state = State.MOVING
-		$IdleTimer.start(randf_range(1.0, 4.0))
 
 func staffhitbox_enabled(is_enabled : bool):
 	staff_hitbox.set_monitoring(is_enabled)

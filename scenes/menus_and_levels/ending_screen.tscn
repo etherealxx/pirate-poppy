@@ -160,7 +160,7 @@ grow_vertical = 2
 [node name="ReferenceRect" type="ReferenceRect" parent="CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label4" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="TheEnd" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
 custom_minimum_size = Vector2(71, 0)
 layout_mode = 2
 size_flags_vertical = 1
@@ -169,7 +169,7 @@ label_settings = SubResource("LabelSettings_anirt")
 vertical_alignment = 2
 autowrap_mode = 3
 
-[node name="Label2" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="BackToMainMenu" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
 custom_minimum_size = Vector2(71, 0)
 layout_mode = 2
 size_flags_vertical = 3

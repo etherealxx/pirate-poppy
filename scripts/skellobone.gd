@@ -203,5 +203,5 @@ func _on_animation_finished() -> void:
 
 func _on_staff_hitbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
-		if !body.is_flashing:
+		if !body.is_flashing and !body.is_invincible:
 			body.take_damage(!anim.flip_h)

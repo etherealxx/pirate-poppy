@@ -18,6 +18,7 @@ var bandana = load("res://scenes/main_gameplay/bandana.tscn")
 
 var is_attacking := false
 var is_flashing := false
+var is_invincible := false #@TBD
 var do_dash := false
 var land_to_move := false
 var hp := 3
